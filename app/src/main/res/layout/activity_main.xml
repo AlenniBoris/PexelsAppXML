@@ -7,10 +7,10 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPhotosMain"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.pexelsproject.screens.main.views.PhotosFromNetworkRecyclerFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/photo_item_layout" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.pexelsappxml.data.source.api
+package com.example.pexelsproject.data.source.api
 
 import com.example.pexelsproject.data.source.api.model.FeaturedCollectionsResponse
 import com.example.pexelsproject.data.source.api.model.PhotoResponse
