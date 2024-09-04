@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="24dp"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_placeholder_light"
+            android:scaleType="fitCenter"
+            android:contentDescription="Picture" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvItemTitle"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="33dp"-->
+<!--            android:layout_marginTop="136dp"-->
+<!--            android:background="#66000000"-->
+<!--            android:gravity="center"-->
+<!--            android:text="TextView"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ivItemImage"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:layout_constraintStart_toStartOf="@id/ivItemImage"-->
+<!--            app:layout_constraintTop_toTopOf="@id/ivItemImage"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/ivItemImage"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
