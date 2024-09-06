@@ -1,8 +1,7 @@
 package com.example.pexelsproject.screens.main
 
-import com.example.pexelsproject.data.model.CollectionsList
+import com.example.pexelsproject.data.model.Collection
 import com.example.pexelsproject.data.model.Photo
-import java.util.Collections
 
 data class MainScreenState(
     val photos: List<Photo> = emptyList(),
@@ -10,7 +9,7 @@ data class MainScreenState(
     val isActive: Boolean = false,
     val history: Set<String> = emptySet(),
     val queryText: String = "",
-    val featuredCollections: List<CollectionsList> = emptyList(),
-    val initialFeaturedCollections: List<CollectionsList> = emptyList(),
+    val featuredCollections: List<Collection> = emptyList(),
+    val initialFeaturedCollections: List<Collection> = emptyList(),
     val selectedFeaturedCollectionId: String = "",
 )

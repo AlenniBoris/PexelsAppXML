@@ -7,9 +7,22 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/searchBarFragmentContainerView"-->
+<!--        android:name="com.example.pexelsproject.screens.main.views.SearchBarFragment"/>-->
+
+
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/featuredCollectionsFragmentContainerView"-->
+<!--        android:name="com.example.pexelsproject.screens.main.views.FeaturedCollectionsRecyclerFragmentFragment"/>-->
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.pexelsproject.screens.main.views.PhotosFromNetworkRecyclerFragment"
+        android:id="@+id/photosFromNetworkFragmentContainerView"
+        android:name="com.example.pexelsproject.screens.main.views.MainScreenFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -12,14 +12,14 @@ import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Photo
 
-class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.RecyclerViewHolder>() {
+class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
 
     private var listOfPhotos: List<Photo> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosRecyclerViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.photo_item_layout,
             parent, false)
-        return RecyclerViewHolder(itemView)
+        return PhotosRecyclerViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +30,7 @@ class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.Recycle
         return listOfPhotos[position].id.toLong()
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PhotosRecyclerViewHolder, position: Int) {
         val current = listOfPhotos[position]
         holder.tvItemText.text = current.photographer
         Glide.with(holder.itemView.context)
@@ -72,7 +72,7 @@ class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.Recycle
 
     }
 
-    class RecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class PhotosRecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val ivItemImage: ImageView = itemView.findViewById(R.id.ivItemImage)
         val tvItemText: TextView = itemView.findViewById(R.id.tvItemTitle)
     }

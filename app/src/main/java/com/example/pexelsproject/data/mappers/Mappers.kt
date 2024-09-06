@@ -1,20 +1,20 @@
 package com.example.pexelsproject.data.mappers
 
-import com.example.pexelsproject.data.model.CollectionsList
+import com.example.pexelsproject.data.model.Collection
 import com.example.pexelsproject.data.model.Photo
 import com.example.pexelsproject.data.model.PhotoFeatures
 import com.example.pexelsproject.data.source.api.model.CollectionsListResponse
 import com.example.pexelsproject.data.source.api.model.PhotoResponse
 
-fun CollectionsListResponse.asCollections(): CollectionsList {
-    return CollectionsList(
-        id = this.id,
-        title = this.title,
-        description = this.description,
-        private = this.private,
-        mediaCount = this.mediaCount,
-        photosCount = this.photosCount,
-        videosCount = this.videosCount
+fun CollectionsListResponse.asCollections(): Collection {
+    return Collection(
+        id = id,
+        title = title,
+        description = description,
+        private = private,
+        mediaCount = mediaCount,
+        photosCount = photosCount,
+        videosCount = videosCount
     )
 }
 

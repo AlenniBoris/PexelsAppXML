@@ -3,7 +3,7 @@ package com.example.pexelsproject.data.repository
 import android.util.Log
 import com.example.pexelsproject.data.mappers.asCollections
 import com.example.pexelsproject.data.mappers.asPhoto
-import com.example.pexelsproject.data.model.CollectionsList
+import com.example.pexelsproject.data.model.Collection
 import com.example.pexelsproject.data.model.Photo
 import com.example.pexelsproject.data.source.api.PhotoAPIService
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class PhotosFromNetworkRepository @Inject constructor(private val photoApiServic
         return listOfPhotos
     }
 
-    suspend fun getFeaturedCollectionsList(page: Int, perPage: Int): List<CollectionsList>{
+    suspend fun getFeaturedCollectionsList(page: Int, perPage: Int): List<Collection>{
         val listOfCollections = try {
             photoApiService.getFeaturedCollections(page, perPage)
                 .collections
