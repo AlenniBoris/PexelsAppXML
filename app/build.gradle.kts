@@ -71,4 +71,10 @@ dependencies {
     //Fragments
     // Kotlin
     implementation("androidx.fragment:fragment-ktx:1.8.2")
+
+    //Cicerone
+    implementation("com.github.terrakok:cicerone:7.1")
+    //Cicerone
+//    implementation("com.github.terrakok:cicerone:X.X.X")
+
 }

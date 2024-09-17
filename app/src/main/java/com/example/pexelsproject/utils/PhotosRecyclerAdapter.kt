@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Photo
+import com.example.pexelsproject.di.PexelsApplication
+import com.example.pexelsproject.navigation.Screen
 
-class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
+class PhotosRecyclerAdapter (
+
+): RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
 
     private var listOfPhotos: List<Photo> = emptyList()
 
@@ -38,6 +42,12 @@ class PhotosRecyclerAdapter : RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosR
             .error(R.drawable.ic_placeholder_light)
             .placeholder(R.drawable.ic_placeholder_light)
             .into(holder.ivItemImage)
+
+        //Item click
+        holder.itemView.setOnClickListener {view ->
+            PexelsApplication.router.navigateTo(Screen.DetailsScreen(current.id))
+        }
+
     }
 
     fun submitList(newItems: List<Photo>) {

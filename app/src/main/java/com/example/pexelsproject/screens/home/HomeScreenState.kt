@@ -1,9 +1,9 @@
-package com.example.pexelsproject.screens.main
+package com.example.pexelsproject.screens.home
 
 import com.example.pexelsproject.data.model.Collection
 import com.example.pexelsproject.data.model.Photo
 
-data class MainScreenState(
+data class HomeScreenState(
     val photos: List<Photo> = emptyList(),
     val errorState: Boolean = false,
     val isActive: Boolean = false,

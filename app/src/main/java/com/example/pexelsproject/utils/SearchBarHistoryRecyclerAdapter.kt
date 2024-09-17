@@ -30,7 +30,7 @@ class SearchBarHistoryRecyclerAdapter : RecyclerView.Adapter<SearchBarHistoryRec
     }
 
     fun submitList(newItems: List<String>){
-        val difUtil = FeaturedCollectionsDiffUtil(
+        val difUtil = SearchBarDiffUtil(
             oldList = listOfSearches,
             newList = newItems
         )
@@ -42,7 +42,7 @@ class SearchBarHistoryRecyclerAdapter : RecyclerView.Adapter<SearchBarHistoryRec
         result.dispatchUpdatesTo(this)
     }
 
-    class FeaturedCollectionsDiffUtil(
+    class SearchBarDiffUtil(
         private val oldList: List<String>,
         private val newList: List<String>
     ): DiffUtil.Callback(){

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".screens.main.views.MainScreenFragment"
+    tools:context=".screens.home.views.HomeScreenFragment"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="50dp"
         android:backgroundTint="#F3F5F9"
-        android:layout_margin="12dp">
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="20dp">
 
         <SearchView
             android:id="@+id/svSearchBar"
@@ -35,13 +36,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:listitem="@layout/featured_collections_item_layout"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:backgroundTint="@color/design_default_color_primary"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPhotosMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/photo_item_layout" />
+        tools:listitem="@layout/photo_item_layout"
+        android:layout_marginHorizontal="20dp"/>
 
     <FrameLayout
         android:id="@+id/flSearchHistoryContainer"

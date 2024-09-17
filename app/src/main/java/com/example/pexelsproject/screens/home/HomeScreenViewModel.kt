@@ -1,4 +1,4 @@
-package com.example.pexelsproject.screens.main
+package com.example.pexelsproject.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -23,12 +22,12 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class HomeScreenViewModel @Inject constructor(
     private val photoRepository: PhotosFromNetworkRepository
 ) : ViewModel(){
 
     private val searchFlow = MutableSharedFlow<String>()
-    val screenState = MutableStateFlow(MainScreenState())
+    val screenState = MutableStateFlow(HomeScreenState())
 
     private val _scrollEvent = Channel<Unit>()
     val scrollEvent: Flow<Unit> = _scrollEvent.receiveAsFlow().flowOn(Dispatchers.Main.immediate)
@@ -43,6 +42,8 @@ class MainScreenViewModel @Inject constructor(
             .onEach { query -> searchPhotoInternal(query) }
             .launchIn(viewModelScope)
     }
+
+    fun getQuery() = screenState.value.queryText
 
     fun searchPhoto(query: String) {
         viewModelScope.launch {
