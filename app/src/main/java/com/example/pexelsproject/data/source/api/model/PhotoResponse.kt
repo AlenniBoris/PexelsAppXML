@@ -4,7 +4,7 @@ import com.example.pexelsproject.data.source.api.model.PhotoSrcListResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class PhotoResponse(
+data class PhotoResponse(
     val id: Int,
     val width: Int,
     val height: Int,

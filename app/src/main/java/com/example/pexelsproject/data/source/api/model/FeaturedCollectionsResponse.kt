@@ -4,7 +4,7 @@ import com.example.pexelsproject.data.source.api.model.CollectionsListResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class FeaturedCollectionsResponse(
+data class FeaturedCollectionsResponse(
     val collections: List<CollectionsListResponse>,
     val page: Int,
     @SerializedName("per_page")

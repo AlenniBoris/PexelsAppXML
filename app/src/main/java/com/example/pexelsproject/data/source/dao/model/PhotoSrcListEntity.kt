@@ -1,8 +1,6 @@
-package com.example.pexelsproject.data.source.api.model
+package com.example.pexelsproject.data.source.dao.model
 
-import java.io.Serializable
-
-data class PhotoSrcListResponse(
+data class PhotoSrcListEntity(
     val original: String,
     val large2x: String,
     val large: String,
@@ -11,4 +9,5 @@ data class PhotoSrcListResponse(
     val portrait: String,
     val landscape: String,
     val tiny: String
-): Serializable
+) {
+}

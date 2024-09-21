@@ -3,7 +3,7 @@ package com.example.pexelsproject.data.source.api.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class CollectionsListResponse(
+data class CollectionsListResponse(
     val id: String,
     val title: String,
     val description: String?,

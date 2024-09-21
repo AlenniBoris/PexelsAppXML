@@ -80,4 +80,7 @@ dependencies {
     //Actvity viewModels
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    //Room
+    implementation("androidx.room:room-runtime:2.6.1")
+
 }

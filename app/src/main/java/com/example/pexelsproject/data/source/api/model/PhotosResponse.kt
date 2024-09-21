@@ -4,7 +4,7 @@ import com.example.pexelsproject.data.source.api.model.PhotoResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class PhotosResponse(
+data class PhotosResponse(
     @SerializedName("total_results")
     val totalResults: Int,
     val page: Int,

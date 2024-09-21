@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pexelsproject.R
+import com.example.pexelsproject.databinding.FragmentBookmarksScreenBinding
+import com.example.pexelsproject.databinding.FragmentHomeScreenBinding
+import com.example.pexelsproject.screens.bookmarks.BookmarksScreenState
+import com.example.pexelsproject.screens.bookmarks.BookmarksScreenViewModel
 import com.example.pexelsproject.screens.home.HomeScreenState
 import com.example.pexelsproject.screens.home.HomeScreenViewModel
 import com.example.pexelsproject.utils.PhotosRecyclerAdapter
@@ -23,12 +27,14 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class BookmarksScreenFragment() : Fragment() {
 
-    private val viewModel: HomeScreenViewModel by viewModels()
+    private val viewModel: BookmarksScreenViewModel by viewModels()
 
     private lateinit var applicationContext: Context
     //Photos
-    private lateinit var photosRecyclerView: RecyclerView
     private lateinit var photosAdapter: PhotosRecyclerAdapter
+
+    private var bookmarksScreenBinding: FragmentBookmarksScreenBinding? = null
+    private val binding get() = bookmarksScreenBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +43,9 @@ class BookmarksScreenFragment() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmarks_screen, container, false)
+    ): View {
+        bookmarksScreenBinding = FragmentBookmarksScreenBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,10 +54,9 @@ class BookmarksScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Photos
-        photosRecyclerView = view.findViewById(R.id.rvPhotosBookmarks)
         photosAdapter = PhotosRecyclerAdapter()
-        photosRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        photosRecyclerView.adapter = photosAdapter
+        binding.rvPhotosBookmarks.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        binding.rvPhotosBookmarks.adapter = photosAdapter
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -59,7 +64,7 @@ class BookmarksScreenFragment() : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun renderState(state: HomeScreenState){
-        photosAdapter.submitList(state.photos)
+    private fun renderState(state: BookmarksScreenState){
+        photosAdapter.submitList(state.favouritePhotos)
     }
 }

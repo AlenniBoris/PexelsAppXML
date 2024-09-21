@@ -1,7 +1,11 @@
 package com.example.pexelsproject.di
 
+import android.app.Application
+import androidx.room.Room
+import com.example.pexelsproject.data.repository.PhotosFromDatabaseRepository
 import com.example.pexelsproject.data.repository.PhotosFromNetworkRepository
 import com.example.pexelsproject.data.source.api.PhotoAPIService
+import com.example.pexelsproject.data.source.dao.BookmarksDatabase
 import com.example.pexelsproject.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -17,6 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object Injector{
     private const val HEADER_AUTHORIZATION = "Authorization"
+    private const val DATABASE_FILE = "bookmarks_data.db"
 
     @Singleton
     @Provides
@@ -48,5 +53,23 @@ object Injector{
             .client(okHttpClient)
             .build()
             .create(PhotoAPIService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePhotosFromNetworkRepository(photoApiService: PhotoAPIService): PhotosFromNetworkRepository =
+        PhotosFromNetworkRepository(photoApiService)
+    @Provides
+    @Singleton
+    fun provideBookmarksDatabase(application: Application): BookmarksDatabase =
+        Room.databaseBuilder(
+            application,
+            BookmarksDatabase::class.java,
+            DATABASE_FILE
+        ).build()
+
+    @Provides
+    @Singleton
+    fun providesBookmarksRepository(database: BookmarksDatabase): PhotosFromDatabaseRepository =
+        PhotosFromDatabaseRepository(database)
 
 }
