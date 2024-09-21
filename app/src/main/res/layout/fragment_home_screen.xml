@@ -36,11 +36,13 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
+            android:id="@+id/searchBar"
+            app:navigationIcon="@drawable/ic_search_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter query"
-            app:layout_scrollFlags="enterAlways"/>
+            app:layout_scrollFlags="enterAlways"
+            app:navigationIconTint="#BB1020"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFeaturedCollections"
@@ -55,13 +57,21 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="Enter query"
-        app:layout_anchor="@id/search_bar"
+        app:layout_anchor="@id/searchBar"
         app:layout_anchorGravity="top"
         >
-
         <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:listitem="@layout/featured_collections_item_layout"
+            android:backgroundTint="@color/design_default_color_primary" />
+
     </com.google.android.material.search.SearchView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Collection
 
-class FeaturedCollectionsRecyclerAdapter : RecyclerView.Adapter<FeaturedCollectionsRecyclerAdapter.CollectionsRecyclerViewHolder>() {
+class FeaturedCollectionsRecyclerAdapter(
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<FeaturedCollectionsRecyclerAdapter.CollectionsRecyclerViewHolder>() {
 
     private var listOfFeaturedCollections: List<Collection> = emptyList()
 
@@ -33,6 +35,10 @@ class FeaturedCollectionsRecyclerAdapter : RecyclerView.Adapter<FeaturedCollecti
     override fun onBindViewHolder(holder: CollectionsRecyclerViewHolder, position: Int) {
         val current = listOfFeaturedCollections[position]
         holder.tvItemText.text = current.title
+
+        holder.itemView.setOnClickListener {
+            onItemClick(current.title)
+        }
     }
 
     fun submitList(newItems: List<Collection>){

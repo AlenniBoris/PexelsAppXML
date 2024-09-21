@@ -77,4 +77,7 @@ dependencies {
     //Cicerone
 //    implementation("com.github.terrakok:cicerone:X.X.X")
 
+    //Actvity viewModels
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
 }

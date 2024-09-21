@@ -37,7 +37,7 @@ class MainAppFragment : Fragment() {
 
         if (savedInstanceState == null){
             parentFragmentManager.beginTransaction()
-                .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(""), "MainAppFragment")
+                .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(), "MainAppFragment")
                 .commit()
             binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_active)
         }
@@ -54,7 +54,7 @@ class MainAppFragment : Fragment() {
     private fun setListenersOnButtons(){
         binding.ibHomeScreenBtn.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(""), "MainAppFragment")
+                .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(), "MainAppFragment")
                 .commit()
             binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_active)
             binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_not_active)

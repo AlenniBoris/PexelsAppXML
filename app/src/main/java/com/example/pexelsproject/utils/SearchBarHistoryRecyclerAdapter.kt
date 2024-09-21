@@ -8,16 +8,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pexelsproject.R
 
-class SearchBarHistoryRecyclerAdapter : RecyclerView.Adapter<SearchBarHistoryRecyclerAdapter.SearchBarHistoryViewHolder>() {
+class SearchBarHistoryRecyclerAdapter(
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<SearchBarHistoryRecyclerAdapter.SearchBarHistoryViewHolder>() {
 
     private var listOfSearches: List<String> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchBarHistoryRecyclerAdapter.SearchBarHistoryViewHolder {
+    ): SearchBarHistoryViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.featured_collections_item_layout, parent, false)
-        return SearchBarHistoryRecyclerAdapter.SearchBarHistoryViewHolder(itemView)
+        return SearchBarHistoryViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -62,6 +64,20 @@ class SearchBarHistoryRecyclerAdapter : RecyclerView.Adapter<SearchBarHistoryRec
             return oldList[oldItemPosition] == newList[newItemPosition]
         }
 
+    }
+
+    override fun onBindViewHolder(
+        holder: SearchBarHistoryViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        super.onBindViewHolder(holder, position, payloads)
+
+        val queryText = listOfSearches[position]
+
+        holder.itemView.setOnClickListener {
+            onItemClick(queryText)
+        }
     }
 
     class SearchBarHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

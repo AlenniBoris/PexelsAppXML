@@ -4,6 +4,7 @@ import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Photo
+import com.example.pexelsproject.databinding.FragmentHomeScreenBinding
 import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.screens.home.HomeScreenState
@@ -32,32 +35,32 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class HomeScreenFragment(private val initialQuery: String) : Fragment() {
+class HomeScreenFragment() : Fragment() {
 
     private val viewModel: HomeScreenViewModel by viewModels()
 
     private lateinit var applicationContext: Context
     //Photos
-    private lateinit var photosRecyclerView: RecyclerView
     private lateinit var photosAdapter: PhotosRecyclerAdapter
     //Featured collections
-    private lateinit var collectionsRecyclerView: RecyclerView
     private lateinit var featuredCollectionsAdapter: FeaturedCollectionsRecyclerAdapter
-//    //History
-//    private lateinit var searchHistoryRecyclerView: RecyclerView
-//    private lateinit var searchHistoryAdapter: SearchBarHistoryRecyclerAdapter
-//    private lateinit var searchHistoryContainer: FrameLayout
-//    private lateinit var searchBar: SearchView
+    //History
+    private lateinit var searchHistoryAdapter: SearchBarHistoryRecyclerAdapter
+
+    private var homeScreenBinding: FragmentHomeScreenBinding? = null
+    private val binding get() = homeScreenBinding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        if (initialQuery.isNotEmpty()){
-            viewModel.queryTextChanged(initialQuery)
-            viewModel.forceSearchPhoto(initialQuery)
-        }
-        return inflater.inflate(R.layout.fragment_home_screen, container, false)
+    ): View {
+        homeScreenBinding = FragmentHomeScreenBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeScreenBinding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,24 +69,32 @@ class HomeScreenFragment(private val initialQuery: String) : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Collections
-        collectionsRecyclerView = view.findViewById(R.id.rvFeaturedCollections)
-        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter()
-        collectionsRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        collectionsRecyclerView.adapter = featuredCollectionsAdapter
+        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{query ->
+            viewModel.queryTextChanged(query)
+            viewModel.forceSearchPhoto(query)
+            binding.searchView.hide()
+        }
+        binding.rvFeaturedCollections.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFeaturedCollections.adapter = featuredCollectionsAdapter
 
         //Photos
-        photosRecyclerView = view.findViewById(R.id.rvPhotosMain)
         photosAdapter = PhotosRecyclerAdapter()
-        photosRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        photosRecyclerView.adapter = photosAdapter
-//
-//        //History
-//        searchHistoryRecyclerView = view.findViewById(R.id.rvSearchHistory)
-//        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter()
-//        searchHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
-//        searchHistoryRecyclerView.adapter = searchHistoryAdapter
-//        searchHistoryContainer = view.findViewById(R.id.flSearchHistoryContainer)
-//        searchBar = view.findViewById(R.id.svSearchBar)
+        binding.rvPhotosMain.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        binding.rvPhotosMain.adapter = photosAdapter
+
+        //History
+        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter{query ->
+            viewModel.queryTextChanged(query)
+            viewModel.forceSearchPhoto(query)
+            binding.searchView.hide()
+        }
+        binding.rvHistory.layoutManager = GridLayoutManager(applicationContext, 2)
+        binding.rvHistory.adapter = searchHistoryAdapter
+
+        binding.searchBar.setOnClickListener {
+            binding.searchView.show()
+        }
+
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -95,9 +106,21 @@ class HomeScreenFragment(private val initialQuery: String) : Fragment() {
     private fun renderState(state: HomeScreenState) {
         featuredCollectionsAdapter.submitList(state.featuredCollections)
         photosAdapter.submitList(state.photos)
-//        searchHistoryAdapter.submitList(state.history.toList())
+        searchHistoryAdapter.submitList(state.history.toList())
 //        searchBar.setQuery(state.queryText, true)
         val isActive = state.isActive
+
+        binding.searchBar.setText(state.queryText)
+
+        binding.searchView.editText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                val enteredQuery = v?.text.toString()
+                viewModel.forceSearchPhoto(enteredQuery)
+                viewModel.queryTextChanged(enteredQuery)
+                binding.searchView.hide()
+                return true
+            }
+        })
 
 //        searchBar.setOnQueryTextFocusChangeListener{ _, hasFocus ->
 //            viewModel.changeIsActive(hasFocus)
