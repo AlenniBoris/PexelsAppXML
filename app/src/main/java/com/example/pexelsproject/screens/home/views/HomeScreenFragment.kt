@@ -43,11 +43,11 @@ class HomeScreenFragment(private val initialQuery: String) : Fragment() {
     //Featured collections
     private lateinit var collectionsRecyclerView: RecyclerView
     private lateinit var featuredCollectionsAdapter: FeaturedCollectionsRecyclerAdapter
-    //History
-    private lateinit var searchHistoryRecyclerView: RecyclerView
-    private lateinit var searchHistoryAdapter: SearchBarHistoryRecyclerAdapter
-    private lateinit var searchHistoryContainer: FrameLayout
-    private lateinit var searchBar: SearchView
+//    //History
+//    private lateinit var searchHistoryRecyclerView: RecyclerView
+//    private lateinit var searchHistoryAdapter: SearchBarHistoryRecyclerAdapter
+//    private lateinit var searchHistoryContainer: FrameLayout
+//    private lateinit var searchBar: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,14 +76,14 @@ class HomeScreenFragment(private val initialQuery: String) : Fragment() {
         photosAdapter = PhotosRecyclerAdapter()
         photosRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         photosRecyclerView.adapter = photosAdapter
-
-        //History
-        searchHistoryRecyclerView = view.findViewById(R.id.rvSearchHistory)
-        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter()
-        searchHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
-        searchHistoryRecyclerView.adapter = searchHistoryAdapter
-        searchHistoryContainer = view.findViewById(R.id.flSearchHistoryContainer)
-        searchBar = view.findViewById(R.id.svSearchBar)
+//
+//        //History
+//        searchHistoryRecyclerView = view.findViewById(R.id.rvSearchHistory)
+//        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter()
+//        searchHistoryRecyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
+//        searchHistoryRecyclerView.adapter = searchHistoryAdapter
+//        searchHistoryContainer = view.findViewById(R.id.flSearchHistoryContainer)
+//        searchBar = view.findViewById(R.id.svSearchBar)
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -95,46 +95,46 @@ class HomeScreenFragment(private val initialQuery: String) : Fragment() {
     private fun renderState(state: HomeScreenState) {
         featuredCollectionsAdapter.submitList(state.featuredCollections)
         photosAdapter.submitList(state.photos)
-        searchHistoryAdapter.submitList(state.history.toList())
-        searchBar.setQuery(state.queryText, true)
+//        searchHistoryAdapter.submitList(state.history.toList())
+//        searchBar.setQuery(state.queryText, true)
         val isActive = state.isActive
 
-        searchBar.setOnQueryTextFocusChangeListener{ _, hasFocus ->
-            viewModel.changeIsActive(hasFocus)
-            if (hasFocus){
-                showSearchHistory()
-            }
-        }
-        searchBar.setOnQueryTextListener((object : SearchView.OnQueryTextListener{
-            //End of input and submitted query
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.forceSearchPhoto(query ?: "")
-                Log.d("QUERY", state.queryText)
-                searchBar.clearFocus()
-                hideSearchHistory()
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-
-                //TODO make search after 2.5 seconds
-
-                showSearchHistory()
-                return true
-            }
-        }))
+//        searchBar.setOnQueryTextFocusChangeListener{ _, hasFocus ->
+//            viewModel.changeIsActive(hasFocus)
+//            if (hasFocus){
+//                showSearchHistory()
+//            }
+//        }
+//        searchBar.setOnQueryTextListener((object : SearchView.OnQueryTextListener{
+//            //End of input and submitted query
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                viewModel.forceSearchPhoto(query ?: "")
+//                Log.d("QUERY", state.queryText)
+//                searchBar.clearFocus()
+//                hideSearchHistory()
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//
+//                //TODO make search after 2.5 seconds
+//
+//                showSearchHistory()
+//                return true
+//            }
+//        }))
 
     }
 
-    private fun showSearchHistory() {
-        searchHistoryContainer.visibility = View.VISIBLE
-        photosRecyclerView.visibility = View.GONE
-        collectionsRecyclerView.visibility = View.GONE
-    }
-
-    private fun hideSearchHistory() {
-        searchHistoryContainer.visibility = View.GONE
-        photosRecyclerView.visibility = View.VISIBLE
-        collectionsRecyclerView.visibility = View.VISIBLE
-    }
+//    private fun showSearchHistory() {
+//        searchHistoryContainer.visibility = View.VISIBLE
+//        photosRecyclerView.visibility = View.GONE
+//        collectionsRecyclerView.visibility = View.GONE
+//    }
+//
+//    private fun hideSearchHistory() {
+//        searchHistoryContainer.visibility = View.GONE
+//        photosRecyclerView.visibility = View.VISIBLE
+//        collectionsRecyclerView.visibility = View.VISIBLE
+//    }
 }
