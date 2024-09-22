@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object Injector{
     private const val HEADER_AUTHORIZATION = "Authorization"
-    private const val DATABASE_FILE = "bookmarks_data.db"
+    private const val DATABASE_FILE = "bookmarks-data.db"
 
     @Singleton
     @Provides

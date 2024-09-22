@@ -25,5 +25,4 @@ data class PhotoEntity(
     val src: PhotoSrcListEntity,
     val liked: Boolean,
     val alt: String
-) {
-}
+)

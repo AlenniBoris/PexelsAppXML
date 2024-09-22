@@ -9,5 +9,4 @@ data class PhotoSrcListEntity(
     val portrait: String,
     val landscape: String,
     val tiny: String
-) {
-}
+)

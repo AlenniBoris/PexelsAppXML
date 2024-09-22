@@ -44,7 +44,7 @@ class DetailsScreenViewModel @Inject constructor(
     fun getPhotoFromBookmarksDatabaseById(id: Int?){
         if (id != null){
             viewModelScope.launch {
-                val favourite = bookmarksRepository.getFavouriteById(id)
+                val favourite = bookmarksRepository.getPhotoFromBookmarksDatabaseById(id)
                 Log.d("DatabaseById", favourite.toString())
                 assignPhoto(favourite)
                 countPhotosById(id)
@@ -66,14 +66,14 @@ class DetailsScreenViewModel @Inject constructor(
 
     suspend fun addToBookmarks(photo: Photo) {
         viewModelScope.launch {
-            bookmarksRepository.addPhoto(photo)
+            bookmarksRepository.addPhotoToBookmarksDatabase(photo)
         }
 
     }
 
     suspend fun removeFromBookmarks(photo: Photo) {
         viewModelScope.launch {
-            bookmarksRepository.deletePhoto(photo)
+            bookmarksRepository.deletePhotoFromBookmarksDatabase(photo)
         }
     }
 

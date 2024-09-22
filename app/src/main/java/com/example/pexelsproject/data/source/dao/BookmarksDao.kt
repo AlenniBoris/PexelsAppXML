@@ -11,16 +11,16 @@ import com.example.pexelsproject.data.source.dao.model.PhotoEntity
 interface BookmarksDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPhoto(photoEntity: PhotoEntity)
+    suspend fun addPhotoToBookmarksDatabase(photoEntity: PhotoEntity)
 
     @Delete
-    suspend fun deletePhoto(photoEntity: PhotoEntity)
+    suspend fun deletePhotoFromBookmarksDatabase(photoEntity: PhotoEntity)
 
     @Query("SELECT * FROM `bookmarks_photo`")
-    suspend fun getAllFavourites(): List<PhotoEntity>
+    suspend fun getAllPhotosFromBookmarksDatabase(): List<PhotoEntity>
 
     @Query("SELECT * FROM `bookmarks_photo` WHERE id=:id")
-    suspend fun getFavouriteById(id: Int): PhotoEntity
+    suspend fun getPhotoFromBookmarksDatabaseById(id: Int): PhotoEntity
 
     @Query("SELECT COUNT(*) FROM `bookmarks_photo` WHERE id=:id")
     suspend fun countById(id: Int): Int

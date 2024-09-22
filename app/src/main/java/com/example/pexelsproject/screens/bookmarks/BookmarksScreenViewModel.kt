@@ -22,7 +22,7 @@ class BookmarksScreenViewModel @Inject constructor(
     }
 
     suspend fun getFavouritePhotosInit(){
-        val favouriteList = bookmarksRepository.getAllFavourites()
+        val favouriteList = bookmarksRepository.getAllPhotosFromBookmarksDatabase()
 
         viewModelScope.launch {
             screenState.update { state ->

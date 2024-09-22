@@ -128,7 +128,7 @@
                     >
 
                     <ImageButton
-                        android:id="@+id/ibDetailsFavourite"
+                        android:id="@+id/ibDetailsBookmarksDatabase"
                         android:scaleType="center"
                         android:layout_width="48dp"
                         android:layout_height="48dp"

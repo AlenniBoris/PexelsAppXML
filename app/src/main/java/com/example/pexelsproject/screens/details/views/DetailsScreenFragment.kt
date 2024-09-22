@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Photo
+import com.example.pexelsproject.databinding.FragmentDetailsScreenBinding
+import com.example.pexelsproject.databinding.FragmentMainAppBinding
 import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.screens.details.DetailsScreenState
@@ -35,52 +37,34 @@ class DetailsScreenFragment(
 
     private lateinit var applicationContext: Context
     //Photo
-    private lateinit var ivDetailsImage: ImageView
-    private lateinit var ibButtonBack: ImageButton
-    private lateinit var ibButtonDownload: ImageButton
-    private lateinit var ibButtonFavourite: ImageButton
-    private lateinit var tvDetailsName: TextView
 
     private val viewModel: DetailsScreenViewModel by viewModels()
+
+    private var detailsScreenFragmentBinding: FragmentDetailsScreenBinding? = null
+    private val binding get() = detailsScreenFragmentBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getPhotoFromPexelsById(id)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        detailsScreenFragmentBinding = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details_screen, container, false)
+    ): View {
+        detailsScreenFragmentBinding = FragmentDetailsScreenBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         applicationContext = requireActivity().applicationContext
-
-        ivDetailsImage = view.findViewById(R.id.ivDetailsImage)
-
-        ibButtonBack = view.findViewById(R.id.ibDetailsBack)
-        ibButtonBack.setOnClickListener {
-//            view.findViewById<LinearLayout>(R.id.bottomBtnsContainer).visibility = LinearLayout.VISIBLE
-            PexelsApplication.router.exit()
-            Toast.makeText(applicationContext, "Exit to home screen", Toast.LENGTH_SHORT).show()
-        }
-
-        ibButtonDownload = view.findViewById(R.id.ibDetailsDownload)
-        ibButtonDownload.setOnClickListener {
-            Toast.makeText(applicationContext, "Download clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        ibButtonFavourite = view.findViewById(R.id.ibDetailsFavourite)
-        ibButtonFavourite.setOnClickListener {
-            Toast.makeText(applicationContext, "Favourites clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        tvDetailsName = view.findViewById(R.id.tvDetailsName)
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -96,9 +80,30 @@ class DetailsScreenFragment(
             .load(currentPhoto?.src?.large2x)
             .error(R.drawable.ic_placeholder_light)
             .placeholder(R.drawable.ic_placeholder_light)
-            .into(ivDetailsImage)
+            .into(binding.ivDetailsImage)
 
-        tvDetailsName.text = currentPhoto?.photographer
+        binding.tvDetailsName.text = currentPhoto?.photographer
+
+        binding.ibDetailsBookmarksDatabase.setOnClickListener {
+            viewModel.actionOnAddToBookmarksButton(currentPhoto!!)
+            Toast.makeText(applicationContext, "Favourites clicked", Toast.LENGTH_SHORT).show()
+        }
+
+        if (state.photoIsFavourite){
+            binding.ibDetailsBookmarksDatabase.setImageResource(R.drawable.icon_favourites_active)
+        }
+        else{
+            binding.ibDetailsBookmarksDatabase.setImageResource(R.drawable.icon_favourites_not_active)
+        }
+
+        binding.ibDetailsBack.setOnClickListener {
+            PexelsApplication.router.exit()
+            Toast.makeText(applicationContext, "Exit to home screen", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.ibDetailsDownload.setOnClickListener {
+            Toast.makeText(applicationContext, "Download clicked", Toast.LENGTH_SHORT).show()
+        }
 
     }
 }
