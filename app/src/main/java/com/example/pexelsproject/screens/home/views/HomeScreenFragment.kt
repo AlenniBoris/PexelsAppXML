@@ -108,6 +108,13 @@ class HomeScreenFragment() : Fragment() {
             binding.searchView.show()
         }
 
+        binding.tvCheckInternetConnectionAgain.setOnClickListener {
+            viewModel.checkInternetConnection()
+        }
+
+        binding.tvGetQueryResultsAgain.setOnClickListener {
+            viewModel.forceSearchPhoto("")
+        }
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -133,5 +140,30 @@ class HomeScreenFragment() : Fragment() {
                 return true
             }
         })
+
+        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
+            if (isOnline){
+                Log.d("ONLINE--->", "true")
+                binding.rvFeaturedCollections.visibility = View.VISIBLE
+                if (state.photos.isEmpty()){
+                    binding.noResultsFoundLayout.visibility = View.VISIBLE
+                    binding.rvPhotosMain.visibility = View.GONE
+                } else{
+                    binding.noResultsFoundLayout.visibility = View.GONE
+                    binding.rvPhotosMain.visibility = View.VISIBLE
+                }
+
+                binding.progressBar.visibility = View.GONE
+                binding.noInternetConnectionResultLayout.visibility = View.GONE
+            }else{
+                Log.d("ONLINE--->", "false")
+                binding.rvFeaturedCollections.visibility = View.GONE
+                binding.rvPhotosMain.visibility = View.GONE
+
+                binding.progressBar.visibility = View.VISIBLE
+                binding.noInternetConnectionResultLayout.visibility = View.VISIBLE
+            }
+        }
+
     }
 }

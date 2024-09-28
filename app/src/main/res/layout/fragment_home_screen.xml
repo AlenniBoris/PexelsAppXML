@@ -6,12 +6,87 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <FrameLayout
+        android:id="@+id/noInternetConnectionResultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/ic_no_network_light"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                />
+
+            <TextView
+                android:id="@+id/tvCheckInternetConnectionAgain"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:textColor="#BB1020"
+                android:text="Try Again"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/noResultsFoundLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20sp"
+                android:text="No results found"/>
+
+            <TextView
+                android:id="@+id/tvGetQueryResultsAgain"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:textColor="#BB1020"
+                android:text="Try Again"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior"
-        android:layout_marginTop="160dp">
+        android:layout_marginTop="160dp"
+        android:visibility="visible">
 
         <!-- Screen content goes here. -->
         <LinearLayout
@@ -27,7 +102,6 @@
                 android:layout_marginHorizontal="20dp"/>
 
         </LinearLayout>
-
 
     </androidx.core.widget.NestedScrollView>
 
@@ -53,6 +127,17 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:backgroundTint="@color/design_default_color_primary"
             app:layout_scrollFlags="enterAlways"/>
+        
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:max="100"
+            android:progress="30"
+            android:progressTint="#BB1020"/>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

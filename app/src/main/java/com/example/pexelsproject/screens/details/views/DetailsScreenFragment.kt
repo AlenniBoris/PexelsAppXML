@@ -114,11 +114,48 @@ class DetailsScreenFragment() : Fragment() {
             PexelsApplication.router.navigateTo(
                 Screen.MainAppScreens(prevDestination)
             )
-            Toast.makeText(applicationContext, "Exit to home screen", Toast.LENGTH_SHORT).show()
         }
 
         binding.ibDetailsDownload.setOnClickListener {
             Toast.makeText(applicationContext, "Download clicked", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.ibDetailsNoInternetBack.setOnClickListener{
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens(prevDestination)
+            )
+        }
+
+        binding.ibDetailsNoImageFoundtBack.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens(prevDestination)
+            )
+        }
+
+        binding.tvGetDetailsImageAgain.setOnClickListener {
+            viewModel.checkInternetConnection()
+        }
+
+        binding.tvExploreAgainButton.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens("home_screen")
+            )
+        }
+
+        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
+            if (isOnline && state.currentPhoto == null){
+                binding.svDetailsNotErrorScreen.visibility = View.GONE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.VISIBLE
+            }else if (isOnline || (!isOnline && state.currentPhoto != null)){
+                binding.svDetailsNotErrorScreen.visibility = View.VISIBLE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.GONE
+            }else if (!isOnline){
+                binding.svDetailsNotErrorScreen.visibility = View.VISIBLE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.GONE
+            }
         }
 
     }

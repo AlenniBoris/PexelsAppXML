@@ -2,10 +2,12 @@ package com.example.pexelsproject.screens.details
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pexelsproject.data.model.Photo
 import com.example.pexelsproject.data.repository.PhotosFromDatabaseRepository
 import com.example.pexelsproject.data.repository.PhotosFromNetworkRepository
+import com.example.pexelsproject.utils.ConnectivityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,10 +17,19 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
     private val photoRepository: PhotosFromNetworkRepository,
-    private val bookmarksRepository: PhotosFromDatabaseRepository
+    private val bookmarksRepository: PhotosFromDatabaseRepository,
+    private val connectivityRepository: ConnectivityRepository,
 ) : ViewModel() {
 
     val screenState = MutableStateFlow(DetailsScreenState())
+
+    val isOnline = connectivityRepository.isConnected.asLiveData()
+
+    fun checkInternetConnection(){
+        viewModelScope.launch {
+            connectivityRepository.checkInternetConnection()
+        }
+    }
 
     private fun changeIsFavourite(isFavourite: Boolean){
         screenState.update { state -> state.copy(photoIsFavourite = isFavourite) }

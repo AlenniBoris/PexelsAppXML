@@ -64,6 +64,12 @@ class BookmarksScreenFragment() : Fragment() {
         binding.rvPhotosBookmarks.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosBookmarks.adapter = photosAdapter
 
+        binding.tvExploreButton.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens("from_bookmarks_screen")
+            )
+        }
+
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state -> renderState(state) }
@@ -72,5 +78,16 @@ class BookmarksScreenFragment() : Fragment() {
 
     private fun renderState(state: BookmarksScreenState){
         photosAdapter.submitList(state.favouritePhotos)
+
+        if (state.favouritePhotos.isEmpty()){
+            binding.bookmarksNotEmptyLayout.visibility = View.GONE
+            binding.tvBookmarksEmptyPageTitle.visibility = View.VISIBLE
+            binding.bookmarksEmptyLayout.visibility = View.VISIBLE
+        }
+        else{
+            binding.bookmarksNotEmptyLayout.visibility = View.VISIBLE
+            binding.tvBookmarksEmptyPageTitle.visibility = View.GONE
+            binding.bookmarksEmptyLayout.visibility = View.GONE
+        }
     }
 }

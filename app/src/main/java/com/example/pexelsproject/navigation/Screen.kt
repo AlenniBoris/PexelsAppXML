@@ -10,8 +10,8 @@ import com.example.pexelsproject.screens.home.views.HomeScreenFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screen {
-    fun HomeScreen() = FragmentScreen{ HomeScreenFragment() }
-    fun BookmarksScreen() = FragmentScreen { BookmarksScreenFragment() }
+//    fun HomeScreen() = FragmentScreen{ HomeScreenFragment() }
+//    fun BookmarksScreen() = FragmentScreen { BookmarksScreenFragment() }
 
 
     fun DetailsScreen(id: Int, previousDestination: String) = FragmentScreen {

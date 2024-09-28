@@ -45,15 +45,17 @@ class MainAppFragment : Fragment() {
 
             _prevDestination = arguments?.getString("key_prev_dest")
 
-            if (prevDestination == "home_screen"){
+            if (prevDestination == "home_screen" || prevDestination == "from_bookmarks_screen"){
                 parentFragmentManager.beginTransaction()
                     .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(), "HomeScreenFragment")
                     .commit()
                 binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_active)
+                binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_not_active)
             }else{
                 parentFragmentManager.beginTransaction()
                     .replace(binding.flMainAppFragmentContainer.id, BookmarksScreenFragment(), "BookmarksFragment")
                     .commit()
+                binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_not_active)
                 binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_active)
             }
 
