@@ -3,16 +3,23 @@ package com.example.pexelsproject.screens.home.views
 import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -31,13 +38,15 @@ import com.example.pexelsproject.utils.FeaturedCollectionsRecyclerAdapter
 import com.example.pexelsproject.utils.PhotosRecyclerAdapter
 import com.example.pexelsproject.utils.SearchBarHistoryRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeScreenFragment() : Fragment() {
 
-    private val viewModel: HomeScreenViewModel by viewModels()
+    private val viewModel: HomeScreenViewModel by activityViewModels()
 
     private lateinit var applicationContext: Context
     //Photos
@@ -78,7 +87,11 @@ class HomeScreenFragment() : Fragment() {
         binding.rvFeaturedCollections.adapter = featuredCollectionsAdapter
 
         //Photos
-        photosAdapter = PhotosRecyclerAdapter()
+        photosAdapter = PhotosRecyclerAdapter(){ id ->
+            PexelsApplication.router.navigateTo(
+                Screen.DetailsScreen(id, "home_screen")
+            )
+        }
         binding.rvPhotosMain.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosMain.adapter = photosAdapter
 
@@ -107,7 +120,6 @@ class HomeScreenFragment() : Fragment() {
         featuredCollectionsAdapter.submitList(state.featuredCollections)
         photosAdapter.submitList(state.photos)
         searchHistoryAdapter.submitList(state.history.toList())
-//        searchBar.setQuery(state.queryText, true)
         val isActive = state.isActive
 
         binding.searchBar.setText(state.queryText)
@@ -121,43 +133,5 @@ class HomeScreenFragment() : Fragment() {
                 return true
             }
         })
-
-//        searchBar.setOnQueryTextFocusChangeListener{ _, hasFocus ->
-//            viewModel.changeIsActive(hasFocus)
-//            if (hasFocus){
-//                showSearchHistory()
-//            }
-//        }
-//        searchBar.setOnQueryTextListener((object : SearchView.OnQueryTextListener{
-//            //End of input and submitted query
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                viewModel.forceSearchPhoto(query ?: "")
-//                Log.d("QUERY", state.queryText)
-//                searchBar.clearFocus()
-//                hideSearchHistory()
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//
-//                //TODO make search after 2.5 seconds
-//
-//                showSearchHistory()
-//                return true
-//            }
-//        }))
-
     }
-
-//    private fun showSearchHistory() {
-//        searchHistoryContainer.visibility = View.VISIBLE
-//        photosRecyclerView.visibility = View.GONE
-//        collectionsRecyclerView.visibility = View.GONE
-//    }
-//
-//    private fun hideSearchHistory() {
-//        searchHistoryContainer.visibility = View.GONE
-//        photosRecyclerView.visibility = View.VISIBLE
-//        collectionsRecyclerView.visibility = View.VISIBLE
-//    }
 }

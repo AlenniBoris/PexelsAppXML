@@ -51,7 +51,7 @@ class HomeScreenViewModel @Inject constructor(
                 state.copy(
                     queryText = query,
                     selectedFeaturedCollectionId = "",
-                    featuredCollections = state.initialFeaturedCollections
+                    featuredCollections = state.initialFeaturedCollections,
                 )
             }
 

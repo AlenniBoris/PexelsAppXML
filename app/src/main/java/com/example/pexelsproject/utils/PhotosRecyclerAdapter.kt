@@ -15,7 +15,7 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 
 class PhotosRecyclerAdapter (
-
+    private val onItemClick: (Int) -> Unit
 ): RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
 
     private var listOfPhotos: List<Photo> = emptyList()
@@ -45,7 +45,7 @@ class PhotosRecyclerAdapter (
 
         //Item click
         holder.itemView.setOnClickListener {view ->
-            PexelsApplication.router.navigateTo(Screen.DetailsScreen(current.id))
+            onItemClick(current.id)
         }
 
     }
