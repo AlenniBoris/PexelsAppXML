@@ -49,6 +49,13 @@ class HomeScreenViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    fun internetRetryEventHandler(){
+        viewModelScope.launch {
+            getFeaturedCollection()
+            getQueryPhotos(getQuery())
+        }
+    }
+
     fun checkInternetConnection(){
         viewModelScope.launch {
             connectivityRepository.checkInternetConnection()

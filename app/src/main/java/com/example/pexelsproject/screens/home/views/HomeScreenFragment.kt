@@ -110,10 +110,13 @@ class HomeScreenFragment() : Fragment() {
 
         binding.tvCheckInternetConnectionAgain.setOnClickListener {
             viewModel.checkInternetConnection()
+            Log.d("interet", "tapped")
         }
 
         binding.tvGetQueryResultsAgain.setOnClickListener {
+            viewModel.queryTextChanged("")
             viewModel.forceSearchPhoto("")
+            Log.d("explore", "tapped")
         }
 
         viewModel.screenState
@@ -146,24 +149,26 @@ class HomeScreenFragment() : Fragment() {
                 Log.d("ONLINE--->", "true")
                 binding.rvFeaturedCollections.visibility = View.VISIBLE
                 if (state.photos.isEmpty()){
-                    binding.noResultsFoundLayout.visibility = View.VISIBLE
-                    binding.rvPhotosMain.visibility = View.GONE
+                    binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
+                    binding.nsvPhotos.visibility = View.GONE
                 } else{
-                    binding.noResultsFoundLayout.visibility = View.GONE
-                    binding.rvPhotosMain.visibility = View.VISIBLE
+                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+                    binding.nsvPhotos.visibility = View.VISIBLE
                 }
 
                 binding.progressBar.visibility = View.GONE
-                binding.noInternetConnectionResultLayout.visibility = View.GONE
+                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
             }else{
                 Log.d("ONLINE--->", "false")
                 binding.rvFeaturedCollections.visibility = View.GONE
                 binding.rvPhotosMain.visibility = View.GONE
 
                 binding.progressBar.visibility = View.VISIBLE
-                binding.noInternetConnectionResultLayout.visibility = View.VISIBLE
+                binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
             }
         }
+
+
 
     }
 }

@@ -6,82 +6,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/noInternetConnectionResultLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvNoInternetConnectionResultLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_marginTop="250dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal|center_vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/ic_no_network_light"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                />
-
-            <TextView
-                android:id="@+id/tvCheckInternetConnectionAgain"
-                android:clickable="true"
-                android:layout_gravity="center_horizontal"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:textColor="#BB1020"
-                android:text="Try Again"
-                android:textSize="18sp"
-                />
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal|center_vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ic_no_network_light"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvCheckInternetConnectionAgain"
+                    android:clickable="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="#BB1020"
+                    android:text="Try Again"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
-    </FrameLayout>
 
-
-    <FrameLayout
-        android:id="@+id/noResultsFoundLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvNoResultsFoundLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_marginTop="250dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical|center_horizontal">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20sp"
-                android:text="No results found"/>
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-            <TextView
-                android:id="@+id/tvGetQueryResultsAgain"
-                android:clickable="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:textColor="#BB1020"
-                android:text="Try Again"
-                android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20sp"
+                    android:text="No results found"/>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tvGetQueryResultsAgain"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BB1020"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Explore"
+                    android:textSize="18sp"/>
 
+            </LinearLayout>
+        </FrameLayout>
 
-    </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvPhotos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior"
