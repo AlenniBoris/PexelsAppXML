@@ -118,6 +118,7 @@ class DetailsScreenFragment() : Fragment() {
 
         binding.ibDetailsDownload.setOnClickListener {
             Toast.makeText(applicationContext, "Download clicked", Toast.LENGTH_SHORT).show()
+            viewModel.downloadImagesToGallery(applicationContext)
         }
 
         binding.ibDetailsNoInternetBack.setOnClickListener{
