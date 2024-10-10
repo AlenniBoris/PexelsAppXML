@@ -168,5 +168,27 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun getSelectedFeaturedCollectionId() = screenState.value.selectedFeaturedCollectionId
+
+    fun selectedFeaturedCollectionIdChanged(id: String){
+        screenState.update { state ->
+            val currentCollections = state.initialFeaturedCollections.toMutableList()
+            val foundIndex = currentCollections.indexOfFirst { item -> item.id == id }
+
+            if (foundIndex != -1) {
+                val firstElement = currentCollections.removeAt(foundIndex)
+                currentCollections.add(0, firstElement)
+            }
+
+            state.copy(
+                selectedFeaturedCollectionId = id,
+                featuredCollections = currentCollections.toList()
+            )
+        }
+
+        viewModelScope.launch {
+            _scrollEvent.send(Unit)
+        }
+    }
 
 }

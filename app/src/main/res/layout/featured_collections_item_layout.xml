@@ -5,13 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="100dp"
     android:layout_marginHorizontal="10dp"
-    android:layout_marginVertical="12dp">
+    android:layout_marginVertical="12dp"
+    android:backgroundTint="#F3F5F9"
+    android:id="@+id/cvFeaturedCollectionTitle">
 
     <TextView
         android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:backgroundTint="#F3F5F9"
         android:text="Collection"
         android:textColor="#1E1E1E"
         android:layout_height="match_parent"

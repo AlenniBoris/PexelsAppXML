@@ -34,6 +34,7 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.screens.home.HomeScreenState
 import com.example.pexelsproject.screens.home.HomeScreenViewModel
+import com.example.pexelsproject.utils.ExtraFunctions
 import com.example.pexelsproject.utils.FeaturedCollectionsRecyclerAdapter
 import com.example.pexelsproject.utils.PhotosRecyclerAdapter
 import com.example.pexelsproject.utils.SearchBarHistoryRecyclerAdapter
@@ -78,9 +79,20 @@ class HomeScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Collections
-        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{query ->
-            viewModel.queryTextChanged(query)
-            viewModel.forceSearchPhoto(query)
+
+        viewModel.scrollEvent
+            .onEach {
+                binding.rvFeaturedCollections.scrollToPosition(0)
+            }
+            .launchIn(lifecycleScope)
+
+        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{id, query ->
+            ExtraFunctions.changeSearch(
+                scope = lifecycleScope,
+                mainScreenViewModel = viewModel,
+                title = query,
+                id = id
+            )
             binding.searchView.hide()
         }
         binding.rvFeaturedCollections.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
@@ -127,9 +139,13 @@ class HomeScreenFragment() : Fragment() {
     }
 
     private fun renderState(state: HomeScreenState) {
+
+        featuredCollectionsAdapter.submitQueryAndSelectedId(state.queryText, state.selectedFeaturedCollectionId)
         featuredCollectionsAdapter.submitList(state.featuredCollections)
+
         photosAdapter.submitList(state.photos)
         searchHistoryAdapter.submitList(state.history.toList())
+
         val isActive = state.isActive
 
         binding.searchBar.setText(state.queryText)
@@ -137,36 +153,36 @@ class HomeScreenFragment() : Fragment() {
         binding.searchView.editText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 val enteredQuery = v?.text.toString()
-                viewModel.forceSearchPhoto(enteredQuery)
                 viewModel.queryTextChanged(enteredQuery)
+                viewModel.forceSearchPhoto(enteredQuery)
                 binding.searchView.hide()
                 return true
             }
         })
 
-        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
-            if (isOnline){
-                Log.d("ONLINE--->", "true")
-                binding.rvFeaturedCollections.visibility = View.VISIBLE
-                if (state.photos.isEmpty()){
-                    binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
-                    binding.nsvPhotos.visibility = View.GONE
-                } else{
-                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
-                    binding.nsvPhotos.visibility = View.VISIBLE
-                }
-
-                binding.progressBar.visibility = View.GONE
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
-            }else{
-                Log.d("ONLINE--->", "false")
-                binding.rvFeaturedCollections.visibility = View.GONE
-                binding.rvPhotosMain.visibility = View.GONE
-
-                binding.progressBar.visibility = View.VISIBLE
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
-            }
-        }
+//        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
+//            if (isOnline){
+//                Log.d("ONLINE--->", "true")
+//                binding.rvFeaturedCollections.visibility = View.VISIBLE
+//                if (state.photos.isEmpty()){
+//                    binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
+//                    binding.nsvPhotos.visibility = View.GONE
+//                } else{
+//                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+//                    binding.nsvPhotos.visibility = View.VISIBLE
+//                }
+//
+//                binding.progressBar.visibility = View.GONE
+//                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+//            }else{
+//                Log.d("ONLINE--->", "false")
+//                binding.rvFeaturedCollections.visibility = View.GONE
+//                binding.rvPhotosMain.visibility = View.GONE
+//
+//                binding.progressBar.visibility = View.VISIBLE
+//                binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
+//            }
+//        }
 
 
 
