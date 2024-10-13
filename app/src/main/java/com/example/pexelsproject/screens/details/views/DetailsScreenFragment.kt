@@ -31,9 +31,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class DetailsScreenFragment(
-    private val id: Int,
-) : Fragment() {
+class DetailsScreenFragment() : Fragment() {
 
     private lateinit var applicationContext: Context
     //Photo
@@ -43,9 +41,14 @@ class DetailsScreenFragment(
     private var detailsScreenFragmentBinding: FragmentDetailsScreenBinding? = null
     private val binding get() = detailsScreenFragmentBinding!!
 
+    private var _prevDestination: String? = null
+    private val prevDestination get() = _prevDestination!!
+
+    private var _pictureId: Int? = null
+    private val pictureId get() = _pictureId!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getPhotoFromPexelsById(id)
     }
 
     override fun onDestroy() {
@@ -65,6 +68,17 @@ class DetailsScreenFragment(
         super.onViewCreated(view, savedInstanceState)
 
         applicationContext = requireActivity().applicationContext
+
+        _pictureId = arguments?.getInt("key_pic_id")
+        _prevDestination = arguments?.getString("key_prev_dest")
+
+
+        if (prevDestination == "home_screen"){
+            viewModel.getPhotoFromPexelsById(pictureId)
+        } else {
+            viewModel.getPhotoFromBookmarksDatabaseById(pictureId)
+        }
+
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -97,12 +111,52 @@ class DetailsScreenFragment(
         }
 
         binding.ibDetailsBack.setOnClickListener {
-            PexelsApplication.router.exit()
-            Toast.makeText(applicationContext, "Exit to home screen", Toast.LENGTH_SHORT).show()
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens(prevDestination)
+            )
         }
 
         binding.ibDetailsDownload.setOnClickListener {
             Toast.makeText(applicationContext, "Download clicked", Toast.LENGTH_SHORT).show()
+            viewModel.downloadImagesToGallery(applicationContext)
+        }
+
+        binding.ibDetailsNoInternetBack.setOnClickListener{
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens(prevDestination)
+            )
+        }
+
+        binding.ibDetailsNoImageFoundtBack.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens(prevDestination)
+            )
+        }
+
+        binding.tvGetDetailsImageAgain.setOnClickListener {
+            viewModel.checkInternetConnection()
+        }
+
+        binding.tvExploreAgainButton.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens("home_screen")
+            )
+        }
+
+        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
+            if (isOnline && state.currentPhoto == null){
+                binding.svDetailsNotErrorScreen.visibility = View.GONE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.VISIBLE
+            }else if (isOnline || (!isOnline && state.currentPhoto != null)){
+                binding.svDetailsNotErrorScreen.visibility = View.VISIBLE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.GONE
+            }else if (!isOnline){
+                binding.svDetailsNotErrorScreen.visibility = View.VISIBLE
+                binding.flDetailsInternetConnectionErrorLayout.visibility = View.GONE
+                binding.flDetailsImageNotFoundErrorLayout.visibility = View.GONE
+            }
         }
 
     }

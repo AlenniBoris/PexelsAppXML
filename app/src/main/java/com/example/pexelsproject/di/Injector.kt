@@ -1,15 +1,18 @@
 package com.example.pexelsproject.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.pexelsproject.data.repository.PhotosFromDatabaseRepository
 import com.example.pexelsproject.data.repository.PhotosFromNetworkRepository
 import com.example.pexelsproject.data.source.api.PhotoAPIService
 import com.example.pexelsproject.data.source.dao.BookmarksDatabase
+import com.example.pexelsproject.utils.ConnectivityRepository
 import com.example.pexelsproject.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -72,4 +75,8 @@ object Injector{
     fun providesBookmarksRepository(database: BookmarksDatabase): PhotosFromDatabaseRepository =
         PhotosFromDatabaseRepository(database)
 
+    @Provides
+    @Singleton
+    fun providesConnectivityRepository(@ApplicationContext context: Context): ConnectivityRepository =
+        ConnectivityRepository(context)
 }

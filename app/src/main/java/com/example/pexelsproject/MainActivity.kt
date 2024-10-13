@@ -14,9 +14,12 @@ import com.example.pexelsproject.screens.home.HomeScreenViewModel
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.viewModels
+import com.example.pexelsproject.screens.home.HomeScreenState
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val homeScreenViewModel: HomeScreenViewModel by viewModels()
 
     private var navigator = AppNavigator(this, R.id.fvActivityContainer)
 
@@ -24,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         if (savedInstanceState == null){
-            PexelsApplication.router.newRootScreen(Screen.MainAppScreens())
+            PexelsApplication.router.newRootScreen(Screen.MainAppScreens("home_screen"))
         }
     }
 

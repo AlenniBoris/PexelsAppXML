@@ -3,16 +3,23 @@ package com.example.pexelsproject.screens.home.views
 import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,17 +34,20 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.screens.home.HomeScreenState
 import com.example.pexelsproject.screens.home.HomeScreenViewModel
+import com.example.pexelsproject.utils.ExtraFunctions
 import com.example.pexelsproject.utils.FeaturedCollectionsRecyclerAdapter
 import com.example.pexelsproject.utils.PhotosRecyclerAdapter
 import com.example.pexelsproject.utils.SearchBarHistoryRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeScreenFragment() : Fragment() {
 
-    private val viewModel: HomeScreenViewModel by viewModels()
+    private val viewModel: HomeScreenViewModel by activityViewModels()
 
     private lateinit var applicationContext: Context
     //Photos
@@ -69,16 +79,31 @@ class HomeScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Collections
-        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{query ->
-            viewModel.queryTextChanged(query)
-            viewModel.forceSearchPhoto(query)
+
+        viewModel.scrollEvent
+            .onEach {
+                binding.rvFeaturedCollections.scrollToPosition(0)
+            }
+            .launchIn(lifecycleScope)
+
+        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{id, query ->
+            ExtraFunctions.changeSearch(
+                scope = lifecycleScope,
+                mainScreenViewModel = viewModel,
+                title = query,
+                id = id
+            )
             binding.searchView.hide()
         }
         binding.rvFeaturedCollections.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvFeaturedCollections.adapter = featuredCollectionsAdapter
 
         //Photos
-        photosAdapter = PhotosRecyclerAdapter()
+        photosAdapter = PhotosRecyclerAdapter(){ id ->
+            PexelsApplication.router.navigateTo(
+                Screen.DetailsScreen(id, "home_screen")
+            )
+        }
         binding.rvPhotosMain.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosMain.adapter = photosAdapter
 
@@ -95,6 +120,16 @@ class HomeScreenFragment() : Fragment() {
             binding.searchView.show()
         }
 
+        binding.tvCheckInternetConnectionAgain.setOnClickListener {
+            viewModel.checkInternetConnection()
+            Log.d("interet", "tapped")
+        }
+
+        binding.tvGetQueryResultsAgain.setOnClickListener {
+            viewModel.queryTextChanged("")
+            viewModel.forceSearchPhoto("")
+            Log.d("explore", "tapped")
+        }
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -104,10 +139,13 @@ class HomeScreenFragment() : Fragment() {
     }
 
     private fun renderState(state: HomeScreenState) {
+
+        featuredCollectionsAdapter.submitQueryAndSelectedId(state.queryText, state.selectedFeaturedCollectionId)
         featuredCollectionsAdapter.submitList(state.featuredCollections)
+
         photosAdapter.submitList(state.photos)
         searchHistoryAdapter.submitList(state.history.toList())
-//        searchBar.setQuery(state.queryText, true)
+
         val isActive = state.isActive
 
         binding.searchBar.setText(state.queryText)
@@ -115,49 +153,38 @@ class HomeScreenFragment() : Fragment() {
         binding.searchView.editText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 val enteredQuery = v?.text.toString()
-                viewModel.forceSearchPhoto(enteredQuery)
                 viewModel.queryTextChanged(enteredQuery)
+                viewModel.forceSearchPhoto(enteredQuery)
                 binding.searchView.hide()
                 return true
             }
         })
 
-//        searchBar.setOnQueryTextFocusChangeListener{ _, hasFocus ->
-//            viewModel.changeIsActive(hasFocus)
-//            if (hasFocus){
-//                showSearchHistory()
+//        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
+//            if (isOnline){
+//                Log.d("ONLINE--->", "true")
+//                binding.rvFeaturedCollections.visibility = View.VISIBLE
+//                if (state.photos.isEmpty()){
+//                    binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
+//                    binding.nsvPhotos.visibility = View.GONE
+//                } else{
+//                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+//                    binding.nsvPhotos.visibility = View.VISIBLE
+//                }
+//
+//                binding.progressBar.visibility = View.GONE
+//                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+//            }else{
+//                Log.d("ONLINE--->", "false")
+//                binding.rvFeaturedCollections.visibility = View.GONE
+//                binding.rvPhotosMain.visibility = View.GONE
+//
+//                binding.progressBar.visibility = View.VISIBLE
+//                binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
 //            }
 //        }
-//        searchBar.setOnQueryTextListener((object : SearchView.OnQueryTextListener{
-//            //End of input and submitted query
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                viewModel.forceSearchPhoto(query ?: "")
-//                Log.d("QUERY", state.queryText)
-//                searchBar.clearFocus()
-//                hideSearchHistory()
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//
-//                //TODO make search after 2.5 seconds
-//
-//                showSearchHistory()
-//                return true
-//            }
-//        }))
+
+
 
     }
-
-//    private fun showSearchHistory() {
-//        searchHistoryContainer.visibility = View.VISIBLE
-//        photosRecyclerView.visibility = View.GONE
-//        collectionsRecyclerView.visibility = View.GONE
-//    }
-//
-//    private fun hideSearchHistory() {
-//        searchHistoryContainer.visibility = View.GONE
-//        photosRecyclerView.visibility = View.VISIBLE
-//        collectionsRecyclerView.visibility = View.VISIBLE
-//    }
 }

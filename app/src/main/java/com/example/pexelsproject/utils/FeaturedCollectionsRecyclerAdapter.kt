@@ -1,9 +1,12 @@
 package com.example.pexelsproject.utils
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +14,13 @@ import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Collection
 
 class FeaturedCollectionsRecyclerAdapter(
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (String, String) -> Unit,
 ) : RecyclerView.Adapter<FeaturedCollectionsRecyclerAdapter.CollectionsRecyclerViewHolder>() {
 
     private var listOfFeaturedCollections: List<Collection> = emptyList()
+    private var queryText: String = ""
+    private var selectedId: String = ""
+    private var lastSelectedId: String = ""
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,11 +42,39 @@ class FeaturedCollectionsRecyclerAdapter(
         val current = listOfFeaturedCollections[position]
         holder.tvItemText.text = current.title
 
-        holder.itemView.setOnClickListener {
-            onItemClick(current.title)
-        }
-    }
+        Log.d("binding view holder","binded = ${current.title}")
+        Log.d("selected id", "query = $queryText , selected id = $selectedId , current id = ${current.id}")
 
+        if ((current.id == selectedId) || (current.title == queryText)){
+            holder.tvItemText.setBackgroundColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.selected_color)
+            )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.white)
+            )
+            lastSelectedId = selectedId
+        }else if (lastSelectedId != selectedId){
+            holder.tvItemText.setBackgroundColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
+            )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.black)
+            )
+        }else{
+            holder.tvItemText.setBackgroundColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
+            )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.black)
+            )
+        }
+
+        holder.itemView.setOnClickListener {
+            onItemClick(current.id, current.title)
+            notifyDataSetChanged()
+        }
+
+    }
     fun submitList(newItems: List<Collection>){
         val difUtil = FeaturedCollectionsDiffUtil(
             oldList = listOfFeaturedCollections,
@@ -52,6 +86,11 @@ class FeaturedCollectionsRecyclerAdapter(
         listOfFeaturedCollections = newItems
 
         result.dispatchUpdatesTo(this)
+    }
+
+    fun submitQueryAndSelectedId(query: String, selectedFeaturedCollectionId: String){
+        queryText = query
+        selectedId = selectedFeaturedCollectionId
     }
 
     class FeaturedCollectionsDiffUtil(
@@ -78,6 +117,7 @@ class FeaturedCollectionsRecyclerAdapter(
 
     class CollectionsRecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvItemText: TextView = itemView.findViewById(R.id.tvFeaturedCollectionTitle)
+        val cvItem: CardView = itemView.findViewById(R.id.cvFeaturedCollectionTitle)
     }
 
 }

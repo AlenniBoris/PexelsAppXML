@@ -1,8 +1,11 @@
 package com.example.pexelsproject.screens.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pexelsproject.data.repository.PhotosFromNetworkRepository
+import com.example.pexelsproject.utils.ConnectivityRepository
 import com.example.pexelsproject.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +26,8 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val photoRepository: PhotosFromNetworkRepository
+    private val photoRepository: PhotosFromNetworkRepository,
+    private val connectivityRepository: ConnectivityRepository,
 ) : ViewModel(){
 
     private val searchFlow = MutableSharedFlow<String>()
@@ -31,6 +35,8 @@ class HomeScreenViewModel @Inject constructor(
 
     private val _scrollEvent = Channel<Unit>()
     val scrollEvent: Flow<Unit> = _scrollEvent.receiveAsFlow().flowOn(Dispatchers.Main.immediate)
+
+    val isOnline = connectivityRepository.isConnected.asLiveData()
 
     init {
         viewModelScope.launch {
@@ -43,6 +49,19 @@ class HomeScreenViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    fun internetRetryEventHandler(){
+        viewModelScope.launch {
+            getFeaturedCollection()
+            getQueryPhotos(getQuery())
+        }
+    }
+
+    fun checkInternetConnection(){
+        viewModelScope.launch {
+            connectivityRepository.checkInternetConnection()
+        }
+    }
+
     fun getQuery() = screenState.value.queryText
 
     fun searchPhoto(query: String) {
@@ -51,7 +70,7 @@ class HomeScreenViewModel @Inject constructor(
                 state.copy(
                     queryText = query,
                     selectedFeaturedCollectionId = "",
-                    featuredCollections = state.initialFeaturedCollections
+                    featuredCollections = state.initialFeaturedCollections,
                 )
             }
 
@@ -149,5 +168,27 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun getSelectedFeaturedCollectionId() = screenState.value.selectedFeaturedCollectionId
+
+    fun selectedFeaturedCollectionIdChanged(id: String){
+        screenState.update { state ->
+            val currentCollections = state.initialFeaturedCollections.toMutableList()
+            val foundIndex = currentCollections.indexOfFirst { item -> item.id == id }
+
+            if (foundIndex != -1) {
+                val firstElement = currentCollections.removeAt(foundIndex)
+                currentCollections.add(0, firstElement)
+            }
+
+            state.copy(
+                selectedFeaturedCollectionId = id,
+                featuredCollections = currentCollections.toList()
+            )
+        }
+
+        viewModelScope.launch {
+            _scrollEvent.send(Unit)
+        }
+    }
 
 }

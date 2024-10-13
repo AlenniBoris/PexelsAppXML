@@ -9,7 +9,71 @@ data class HomeScreenState(
     val isActive: Boolean = false,
     val history: Set<String> = emptySet(),
     val queryText: String = "",
-    val featuredCollections: List<Collection> = emptyList(),
+    val featuredCollections: List<Collection> = listOf(
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+        Collection(
+            id = "",
+            title = "",
+            description = "",
+            private = false,
+            mediaCount = 0,
+            photosCount = 0,
+            videosCount = 0
+        ),
+    ),
     val initialFeaturedCollections: List<Collection> = emptyList(),
     val selectedFeaturedCollectionId: String = "",
 )

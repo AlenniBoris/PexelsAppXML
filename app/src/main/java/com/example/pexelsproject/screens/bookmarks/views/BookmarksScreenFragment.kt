@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pexelsproject.R
 import com.example.pexelsproject.databinding.FragmentBookmarksScreenBinding
 import com.example.pexelsproject.databinding.FragmentHomeScreenBinding
+import com.example.pexelsproject.di.PexelsApplication
+import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.screens.bookmarks.BookmarksScreenState
 import com.example.pexelsproject.screens.bookmarks.BookmarksScreenViewModel
 import com.example.pexelsproject.screens.home.HomeScreenState
@@ -54,9 +56,19 @@ class BookmarksScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Photos
-        photosAdapter = PhotosRecyclerAdapter()
+        photosAdapter = PhotosRecyclerAdapter(){ id ->
+            PexelsApplication.router.navigateTo(
+                Screen.DetailsScreen(id, "bookmarks_screen")
+            )
+        }
         binding.rvPhotosBookmarks.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosBookmarks.adapter = photosAdapter
+
+        binding.tvExploreButton.setOnClickListener {
+            PexelsApplication.router.navigateTo(
+                Screen.MainAppScreens("from_bookmarks_screen")
+            )
+        }
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -66,5 +78,16 @@ class BookmarksScreenFragment() : Fragment() {
 
     private fun renderState(state: BookmarksScreenState){
         photosAdapter.submitList(state.favouritePhotos)
+
+        if (state.favouritePhotos.isEmpty()){
+            binding.bookmarksNotEmptyLayout.visibility = View.GONE
+            binding.tvBookmarksEmptyPageTitle.visibility = View.VISIBLE
+            binding.bookmarksEmptyLayout.visibility = View.VISIBLE
+        }
+        else{
+            binding.bookmarksNotEmptyLayout.visibility = View.VISIBLE
+            binding.tvBookmarksEmptyPageTitle.visibility = View.GONE
+            binding.bookmarksEmptyLayout.visibility = View.GONE
+        }
     }
 }
