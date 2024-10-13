@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pexelsproject.R
 import com.example.pexelsproject.data.model.Collection
-import kotlin.coroutines.coroutineContext
 
 class FeaturedCollectionsRecyclerAdapter(
     private val onItemClick: (String, String) -> Unit,
@@ -52,14 +49,23 @@ class FeaturedCollectionsRecyclerAdapter(
             holder.tvItemText.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.selected_color)
             )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.white)
+            )
             lastSelectedId = selectedId
         }else if (lastSelectedId != selectedId){
             holder.tvItemText.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
             )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.black)
+            )
         }else{
             holder.tvItemText.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
+            )
+            holder.tvItemText.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.black)
             )
         }
 
@@ -69,7 +75,6 @@ class FeaturedCollectionsRecyclerAdapter(
         }
 
     }
-
     fun submitList(newItems: List<Collection>){
         val difUtil = FeaturedCollectionsDiffUtil(
             oldList = listOfFeaturedCollections,
