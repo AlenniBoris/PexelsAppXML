@@ -7,6 +7,7 @@ import com.example.pexelsproject.screens.details.DetailsScreenViewModel
 import com.example.pexelsproject.screens.details.views.DetailsScreenFragment
 import com.example.pexelsproject.screens.home.HomeScreenViewModel
 import com.example.pexelsproject.screens.home.views.HomeScreenFragment
+import com.example.pexelsproject.screens.liked.views.LikedScreenFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screen {
@@ -28,6 +29,9 @@ object Screen {
                 putString("key_prev_dest", previousDestination)
             }
         }
+    }
+    fun LikedScreen() = FragmentScreen{
+        LikedScreenFragment()
     }
 
 }

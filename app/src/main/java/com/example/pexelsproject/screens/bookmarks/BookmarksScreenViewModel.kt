@@ -2,6 +2,8 @@ package com.example.pexelsproject.screens.bookmarks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pexelsproject.data.model.Photo
 import com.example.pexelsproject.data.repository.PhotosFromDatabaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,5 +34,15 @@ class BookmarksScreenViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun addPhotoToBookmarks(photo: Photo){
+        viewModelScope.launch {
+            addPhotoToBookmarksInit(photo)
+        }
+    }
+
+    suspend fun addPhotoToBookmarksInit(photo: Photo){
+        bookmarksRepository.addPhotoToBookmarksDatabase(photo)
     }
 }

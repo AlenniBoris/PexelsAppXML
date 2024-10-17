@@ -1,11 +1,11 @@
-package com.example.pexelsproject.data.source.dao
+package com.example.pexelsproject.data.source.dao.bookmarks
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.pexelsproject.data.source.dao.model.PhotoEntity
+import com.example.pexelsproject.data.source.dao.bookmarks.model.PhotoEntity
 
 @Dao
 interface BookmarksDao {

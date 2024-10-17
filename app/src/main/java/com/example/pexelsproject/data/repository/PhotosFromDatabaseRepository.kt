@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.pexelsproject.data.mappers.asPhoto
 import com.example.pexelsproject.data.mappers.asPhotoEntity
 import com.example.pexelsproject.data.model.Photo
-import com.example.pexelsproject.data.source.dao.BookmarksDatabase
+import com.example.pexelsproject.data.source.dao.bookmarks.BookmarksDatabase
 
 class PhotosFromDatabaseRepository (
     private val database: BookmarksDatabase

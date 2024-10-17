@@ -103,11 +103,21 @@ class DetailsScreenFragment() : Fragment() {
             Toast.makeText(applicationContext, "Favourites clicked", Toast.LENGTH_SHORT).show()
         }
 
+        binding.ibLikedImageButton.setOnClickListener {
+            viewModel.actionOnAddToLikedButton(currentPhoto!!)
+            Toast.makeText(applicationContext, "Liked clicked", Toast.LENGTH_SHORT).show()
+        }
+
         if (state.photoIsFavourite){
             binding.ibDetailsBookmarksDatabase.setImageResource(R.drawable.icon_favourites_active)
-        }
-        else{
+        } else{
             binding.ibDetailsBookmarksDatabase.setImageResource(R.drawable.icon_favourites_not_active)
+        }
+
+        if (state.photoIsLiked){
+            binding.ibLikedImageButton.setImageResource(R.drawable.heart_active)
+        } else{
+            binding.ibLikedImageButton.setImageResource(R.drawable.heart_not_active)
         }
 
         binding.ibDetailsBack.setOnClickListener {

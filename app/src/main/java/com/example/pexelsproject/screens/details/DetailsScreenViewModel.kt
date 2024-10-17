@@ -15,6 +15,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.data.model.Photo
+import com.example.pexelsproject.data.repository.LikedPhotosFromDatabaseRepository
 import com.example.pexelsproject.data.repository.PhotosFromDatabaseRepository
 import com.example.pexelsproject.data.repository.PhotosFromNetworkRepository
 import com.example.pexelsproject.utils.ConnectivityRepository
@@ -34,6 +35,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val photoRepository: PhotosFromNetworkRepository,
     private val bookmarksRepository: PhotosFromDatabaseRepository,
     private val connectivityRepository: ConnectivityRepository,
+    private val likedRepository: LikedPhotosFromDatabaseRepository
 ) : ViewModel() {
 
     val screenState = MutableStateFlow(DetailsScreenState())
@@ -139,6 +141,31 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
+    fun actionOnAddToLikedButton(photo: Photo){
+        viewModelScope.launch {
+            if (screenState.value.photoIsLiked){
+                removeFromLiked(photo)
+                changeIsLiked(false)
+            } else {
+                addToLiked(photo)
+                changeIsLiked(true)
+            }
+        }
+    }
+
+    suspend fun addToLiked(photoToAdd: Photo){
+        likedRepository.addPhotoToLikedDatabase(photoToAdd)
+    }
+
+    suspend fun removeFromLiked(photoToDelete: Photo){
+        likedRepository.deletePhotoFromLikedDatabase(photoToDelete)
+    }
+
+    private fun changeIsLiked(isFavourite: Boolean){
+        screenState.update { state -> state.copy(photoIsLiked = isFavourite) }
+    }
+
+
     fun actionOnAddToBookmarksButton(photo: Photo){
         viewModelScope.launch {
             if (screenState.value.photoIsFavourite){
@@ -167,8 +194,11 @@ class DetailsScreenViewModel @Inject constructor(
 
     suspend fun countPhotosById(id: Int) {
         viewModelScope.launch {
-            val count = bookmarksRepository.countById(id)
-            changeIsFavourite(count != 0)
+            val bookmarksCount = bookmarksRepository.countById(id)
+            changeIsFavourite(bookmarksCount != 0)
+
+            val likedCount = likedRepository.countById(id)
+            changeIsLiked(likedCount != 0)
         }
     }
 

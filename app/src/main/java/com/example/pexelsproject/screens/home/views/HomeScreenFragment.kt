@@ -160,6 +160,10 @@ class HomeScreenFragment() : Fragment() {
             }
         })
 
+        binding.fab.setOnClickListener{
+            PexelsApplication.router.navigateTo(Screen.LikedScreen())
+        }
+
 //        viewModel.isOnline.observe(viewLifecycleOwner){ isOnline ->
 //            if (isOnline){
 //                Log.d("ONLINE--->", "true")

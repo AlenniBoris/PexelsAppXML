@@ -1,8 +1,8 @@
-package com.example.pexelsproject.data.source.dao
+package com.example.pexelsproject.data.source.dao.bookmarks
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.pexelsproject.data.source.dao.model.PhotoEntity
+import com.example.pexelsproject.data.source.dao.bookmarks.model.PhotoEntity
 
 @Database(
     entities = [PhotoEntity::class],

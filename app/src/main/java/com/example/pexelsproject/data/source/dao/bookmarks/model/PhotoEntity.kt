@@ -1,11 +1,9 @@
-package com.example.pexelsproject.data.source.dao.model
+package com.example.pexelsproject.data.source.dao.bookmarks.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.pexelsproject.data.source.api.model.PhotoSrcListResponse
-import com.google.gson.annotations.SerializedName
 
 @Entity("bookmarks_photo")
 data class PhotoEntity(

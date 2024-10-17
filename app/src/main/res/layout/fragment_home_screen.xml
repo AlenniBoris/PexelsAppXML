@@ -6,6 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/heart_active"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:backgroundTint="#BB1020"
+        android:contentDescription="fab"
+        />
+
+    <!-- Screens for errors -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvNoInternetConnectionResultLayout"
         android:layout_width="match_parent"
@@ -46,8 +59,6 @@
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvNoResultsFoundLayout"
