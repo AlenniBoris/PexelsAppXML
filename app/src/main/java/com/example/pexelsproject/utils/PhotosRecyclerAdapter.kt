@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
-import com.example.pexelsproject.data.model.Photo
+import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 

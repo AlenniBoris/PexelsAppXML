@@ -1,13 +1,9 @@
 package com.example.pexelsproject.navigation
 
 import android.os.Bundle
-import com.example.pexelsproject.screens.app.MainAppFragment
-import com.example.pexelsproject.screens.bookmarks.views.BookmarksScreenFragment
-import com.example.pexelsproject.screens.details.DetailsScreenViewModel
-import com.example.pexelsproject.screens.details.views.DetailsScreenFragment
-import com.example.pexelsproject.screens.home.HomeScreenViewModel
-import com.example.pexelsproject.screens.home.views.HomeScreenFragment
-import com.example.pexelsproject.screens.liked.views.LikedScreenFragment
+import com.example.pexelsproject.presentation.app.MainAppFragment
+import com.example.pexelsproject.presentation.details.views.DetailsScreenFragment
+import com.example.pexelsproject.presentation.liked.views.LikedScreenFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screen {

@@ -3,9 +3,9 @@ package com.example.pexelsproject.data.mappers
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.PrimaryKey
-import com.example.pexelsproject.data.model.Collection
-import com.example.pexelsproject.data.model.Photo
-import com.example.pexelsproject.data.model.PhotoFeatures
+import com.example.pexelsproject.domain.model.Collection
+import com.example.pexelsproject.domain.model.Photo
+import com.example.pexelsproject.domain.model.PhotoFeatures
 import com.example.pexelsproject.data.source.api.model.CollectionsListResponse
 import com.example.pexelsproject.data.source.api.model.PhotoResponse
 import com.example.pexelsproject.data.source.dao.bookmarks.model.PhotoEntity

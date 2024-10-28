@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pexelsproject.R
-import com.example.pexelsproject.data.model.Collection
+import com.example.pexelsproject.domain.model.Collection
 
 class FeaturedCollectionsRecyclerAdapter(
     private val onItemClick: (String, String) -> Unit,

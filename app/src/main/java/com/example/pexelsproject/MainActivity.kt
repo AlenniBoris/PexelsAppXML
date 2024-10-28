@@ -1,20 +1,13 @@
 package com.example.pexelsproject
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pexelsproject.databinding.ActivityMainBinding
 import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
-import com.example.pexelsproject.screens.home.HomeScreenViewModel
+import com.example.pexelsproject.presentation.home.HomeScreenViewModel
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.activity.viewModels
-import com.example.pexelsproject.screens.home.HomeScreenState
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
