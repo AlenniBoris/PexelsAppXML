@@ -116,7 +116,7 @@ class DetailsScreenFragment : Fragment() {
             viewModel.downloadImagesToGallery(applicationContext)
         }
 
-        binding.ibDetailsNoImageFoundtBack.setOnClickListener {
+        binding.ibDetailsNoImageFoundBack.setOnClickListener {
             PexelsApplication.router.navigateTo(
                 Screen.MainAppScreens(prevDestination)
             )

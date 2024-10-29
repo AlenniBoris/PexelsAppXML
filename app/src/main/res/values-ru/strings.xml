@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PexelsProject</string>
+
+    <string name="details_title">Детали</string>
+    <string name="bookmarks_title">Закладки</string>
+    <string name="liked_title">Избранное</string>
+
+    <string name="explore_text">Найти</string>
+    <string name="download_btn_text">Загрузить</string>
+    <string name="collections_item_text">Коллекция</string>
+    <string name="image_not_found_text">Фото не найдено</string>
+    <string name="try_again_text">Попробовать снова</string>
+    <string name="noting_saved_yet_text">Вы пока ничего не сохранили</string>
+    <string name="no_result_found_text">Ничего не найдено</string>
+    <string name="search_bar_hint_text">Введите запрос</string>
+    <string name="deleted_from_liked_text">Удалено из избранного</string>
+    <string name="added_to_bookmarks">Добавлено в закладки</string>
+
+    <string name="back_btn_description">Icon back button</string>
+    <string name="liked_btn_description">Icon liked button</string>
+    <string name="bookmarks_btn_description">Icon bookmarks button</string>
+    <string name="download_btn_description">Icon download button</string>
+    <string name="fab_btn_description">Liked screen open button</string>
+    <string name="no_network_description">No network image sub</string>
+    <string name="icon_home_btn_description">Icon home button</string>
+    <string name="icon_bookmarks_btn_description">Icon bookmarks button</string>
+    <string name="icon_item_image_description">Icon image placeholder</string>
+    <string name="icon_item_text_description">Icon textview text</string>
+</resources>

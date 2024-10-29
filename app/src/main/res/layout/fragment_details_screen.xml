@@ -23,8 +23,8 @@
             >
 
             <ImageButton
-                android:id="@+id/ibDetailsNoImageFoundtBack"
-                android:contentDescription="TODO"
+                android:id="@+id/ibDetailsNoImageFoundBack"
+                android:contentDescription="@string/back_btn_description"
                 android:scaleType="center"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20sp"
-                android:text="Image not found"/>
+                android:text="@string/image_not_found_text"/>
 
             <TextView
                 android:id="@+id/tvExploreAgainButton"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:textColor="#BB1020"
-                android:text="Explore"
+                android:text="@string/explore_text"
                 android:textSize="18sp"/>
 
         </LinearLayout>
@@ -94,7 +94,7 @@
 
                     <ImageButton
                         android:id="@+id/ibDetailsBack"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/back_btn_description"
                         android:scaleType="center"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -107,11 +107,11 @@
 
                 <TextView
                     android:id="@+id/tvDetailsName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_horizontal"
-                    android:text="Details"
+                    android:text="@string/details_title"
                     android:layout_weight="1"
                     android:textSize="12pt" />
 
@@ -147,7 +147,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#F3F5F9"
+                    android:backgroundTint="@color/main_color"
                     app:cardCornerRadius="24dp">
 
                     <LinearLayout
@@ -158,19 +158,18 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="#BB1020"
+                            android:backgroundTint="@color/selected_color"
                             app:cardCornerRadius="50dp">
 
 
                             <ImageButton
                                 android:id="@+id/ibDetailsDownload"
-                                android:contentDescription="TODO"
-                                android:scaleType="center"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:src="@drawable/icon_download"
                                 android:backgroundTint="@android:color/transparent"
-                                />
+                                android:contentDescription="@string/download_btn_description"
+                                android:scaleType="center"
+                                android:src="@drawable/icon_download" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -180,18 +179,13 @@
                             android:layout_gravity="center|center_horizontal"
                             android:layout_marginHorizontal="26dp"
                             android:backgroundTint="@android:color/transparent"
-                            android:textColor="@color/main_color"
-                            android:text="Download" />
+                            android:text="@string/download_btn_text"
+                            android:textColor="@color/on_main_color" />
 
                     </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>
-
-<!--                <Space-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"/>-->
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -203,14 +197,14 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#F3F5F9"
+                        android:backgroundTint="@color/main_color"
                         app:cardCornerRadius="50dp"
                         android:layout_marginEnd="15dp"
                         >
 
                         <ImageButton
                             android:id="@+id/ibLikedImageButton"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/liked_btn_description"
                             android:scaleType="fitCenter"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -223,13 +217,13 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#F3F5F9"
+                        android:backgroundTint="@color/main_color"
                         app:cardCornerRadius="50dp"
                         >
 
                         <ImageButton
                             android:id="@+id/ibDetailsBookmarksDatabase"
-                            android:contentDescription="TODO"
+                            android:contentDescription="@string/bookmarks_btn_description"
                             android:scaleType="center"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
