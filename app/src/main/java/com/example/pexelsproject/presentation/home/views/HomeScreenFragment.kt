@@ -114,7 +114,7 @@ class HomeScreenFragment() : Fragment() {
     private fun renderState(state: HomeScreenState) {
 
         featuredCollectionsAdapter.submitQueryAndSelectedId(state.queryText, state.selectedFeaturedCollectionId)
-        featuredCollectionsAdapter.submitList(state.featuredCollections)
+        featuredCollectionsAdapter.submitList(state.featuredCollections.toMutableList())
 
         photosAdapter.submitList(state.photos)
         searchHistoryAdapter.submitList(state.history.toList())

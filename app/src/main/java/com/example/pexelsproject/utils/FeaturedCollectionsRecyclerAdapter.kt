@@ -17,7 +17,7 @@ class FeaturedCollectionsRecyclerAdapter(
     private val onItemClick: (String, String) -> Unit,
 ) : RecyclerView.Adapter<FeaturedCollectionsRecyclerAdapter.CollectionsRecyclerViewHolder>() {
 
-    private var listOfFeaturedCollections: List<Collection> = emptyList()
+    private var listOfFeaturedCollections: MutableList<Collection> = mutableListOf()
     private var queryText: String = ""
     private var selectedId: String = ""
     private var lastSelectedId: String = ""
@@ -50,32 +50,36 @@ class FeaturedCollectionsRecyclerAdapter(
                 ContextCompat.getColor(holder.itemView.context, R.color.selected_color)
             )
             holder.tvItemText.setTextColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.white)
+                ContextCompat.getColor(holder.itemView.context, R.color.on_selected_color)
             )
             lastSelectedId = selectedId
-        }else if (lastSelectedId != selectedId){
-            holder.tvItemText.setBackgroundColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
-            )
-            holder.tvItemText.setTextColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.black)
-            )
         }else{
             holder.tvItemText.setBackgroundColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.not_selected_color)
+                ContextCompat.getColor(holder.itemView.context, R.color.main_color)
             )
             holder.tvItemText.setTextColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.black)
+                ContextCompat.getColor(holder.itemView.context, R.color.on_main_color)
             )
         }
 
         holder.itemView.setOnClickListener {
+            moveItemToTop(position)
+            selectedId = current.id
             onItemClick(current.id, current.title)
             notifyDataSetChanged()
         }
 
     }
-    fun submitList(newItems: List<Collection>){
+
+    private fun moveItemToTop(position: Int) {
+        if (position == 0) return
+        val selectedItem = listOfFeaturedCollections.removeAt(position)
+        listOfFeaturedCollections.add(0, selectedItem)
+        notifyItemMoved(position, 0)
+    }
+
+
+    fun submitList(newItems: MutableList<Collection>){
         val difUtil = FeaturedCollectionsDiffUtil(
             oldList = listOfFeaturedCollections,
             newList = newItems
@@ -91,6 +95,14 @@ class FeaturedCollectionsRecyclerAdapter(
     fun submitQueryAndSelectedId(query: String, selectedFeaturedCollectionId: String){
         queryText = query
         selectedId = selectedFeaturedCollectionId
+
+
+        val index = listOfFeaturedCollections.indexOfFirst { it.title == queryText }
+        if (index != -1) {
+            moveItemToTop(index)
+        }
+
+        notifyDataSetChanged()
     }
 
     class FeaturedCollectionsDiffUtil(
@@ -117,7 +129,6 @@ class FeaturedCollectionsRecyclerAdapter(
 
     class CollectionsRecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvItemText: TextView = itemView.findViewById(R.id.tvFeaturedCollectionTitle)
-        val cvItem: CardView = itemView.findViewById(R.id.cvFeaturedCollectionTitle)
     }
 
 }

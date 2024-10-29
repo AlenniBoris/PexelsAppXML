@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.domain.model.Photo
-import com.example.pexelsproject.di.PexelsApplication
-import com.example.pexelsproject.navigation.Screen
 
 class PhotosRecyclerAdapter (
     private val onItemClick: (Int) -> Unit
@@ -39,8 +37,8 @@ class PhotosRecyclerAdapter (
         holder.tvItemText.text = current.photographer
         Glide.with(holder.itemView.context)
             .load(current.src.medium)
-            .error(R.drawable.ic_placeholder_light)
-            .placeholder(R.drawable.ic_placeholder_light)
+            .error(R.drawable.ic_placeholder)
+            .placeholder(R.drawable.ic_placeholder)
             .into(holder.ivItemImage)
 
         //Item click

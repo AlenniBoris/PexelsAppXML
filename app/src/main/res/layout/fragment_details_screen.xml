@@ -130,7 +130,7 @@
                     android:id="@+id/ivDetailsImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_placeholder_light"
+                    android:src="@drawable/ic_placeholder"
                     android:adjustViewBounds="true" />
 
             </androidx.cardview.widget.CardView>
@@ -177,10 +177,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/transparent"
-                            android:text="Download"
                             android:layout_gravity="center|center_horizontal"
-                            android:layout_marginHorizontal="26dp"/>
+                            android:layout_marginHorizontal="26dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:textColor="@color/main_color"
+                            android:text="Download" />
 
                     </LinearLayout>
 

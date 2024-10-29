@@ -39,7 +39,7 @@
                 <ImageView
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:src="@drawable/ic_no_network_light"
+                    android:src="@drawable/ic_no_network"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     />

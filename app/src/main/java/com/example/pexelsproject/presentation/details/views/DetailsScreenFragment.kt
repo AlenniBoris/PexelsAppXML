@@ -77,8 +77,8 @@ class DetailsScreenFragment : Fragment() {
 
         Glide.with(applicationContext)
             .load(currentPhoto?.src?.large2x)
-            .error(R.drawable.ic_placeholder_light)
-            .placeholder(R.drawable.ic_placeholder_light)
+            .error(R.drawable.ic_placeholder)
+            .placeholder(R.drawable.ic_placeholder)
             .into(binding.ivDetailsImage)
 
         binding.tvDetailsName.text = currentPhoto?.photographer

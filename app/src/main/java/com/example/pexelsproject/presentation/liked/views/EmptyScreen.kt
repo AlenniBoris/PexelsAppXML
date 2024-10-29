@@ -35,7 +35,7 @@ fun EmptyScreen(
         if (!hasInternet){
             Image(
                 painter = painterResource(id =
-                R.drawable.ic_no_network_light
+                R.drawable.ic_no_network
                 ),
                 contentDescription = "Wifi"
             )
