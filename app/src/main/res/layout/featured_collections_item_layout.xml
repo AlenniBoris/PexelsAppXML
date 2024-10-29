@@ -13,7 +13,7 @@
         android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:text="Collection"
+        android:text="@string/collections_item_text"
         android:textColor="@color/on_main_color"
         android:layout_height="match_parent"
         android:id="@+id/tvFeaturedCollectionTitle"/>

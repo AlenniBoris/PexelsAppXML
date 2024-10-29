@@ -3,6 +3,7 @@ package com.example.pexelsproject.presentation.liked.views
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,11 +21,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.pexelsproject.R
 import kotlinx.coroutines.launch
 
 @Composable
@@ -36,12 +40,12 @@ fun PhotoCards(
 ){
 
     val offsetX = remember { Animatable(0f) }
-    val swipeThreshold = 150f  // Пороговое значение для свайпа
+    val swipeThreshold = 150f
 
     val coroutineScope = rememberCoroutineScope()
 
     val modifier = Modifier
-        .padding(8.dp)
+        .padding(top = 15.dp)
         .clip(RoundedCornerShape(24.dp))
         .pointerInput(Unit) {
             detectHorizontalDragGestures(
@@ -66,16 +70,15 @@ fun PhotoCards(
     Box(
         modifier = modifier
             .offset { IntOffset(offsetX.value.toInt(), 0) }
-            .background(Color.White)
-            .padding(8.dp)
             .clip(RoundedCornerShape(24.dp)),
         contentAlignment = Alignment.BottomCenter
     ){
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
             model = url,
-            contentDescription = "image",
-            contentScale = ContentScale.Crop
+            contentDescription = stringResource(R.string.icon_item_image_description),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(R.drawable.ic_placeholder)
         )
         Box(
             modifier = Modifier

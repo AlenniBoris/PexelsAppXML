@@ -15,7 +15,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:backgroundTint="#BB1020"
-        android:contentDescription="fab"
+        android:contentDescription="@string/fab_btn_description"
         />
 
     <!-- Screens for errors -->
@@ -39,6 +39,7 @@
                 <ImageView
                     android:layout_width="130dp"
                     android:layout_height="130dp"
+                    android:contentDescription="@string/no_network_description"
                     android:src="@drawable/ic_no_network"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
@@ -52,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:textColor="#BB1020"
-                    android:text="Try Again"
+                    android:text="@string/try_again_text"
                     android:textSize="18sp"
                     />
             </LinearLayout>
@@ -83,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="20sp"
-                    android:text="No results found"/>
+                    android:text="@string/no_result_found_text"/>
 
                 <TextView
                     android:id="@+id/tvGetQueryResultsAgain"
@@ -93,7 +94,7 @@
                     android:textColor="#BB1020"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Explore"
+                    android:text="@string/explore_text"
                     android:textSize="18sp"/>
 
             </LinearLayout>
@@ -137,7 +138,7 @@
             app:navigationIcon="@drawable/ic_search_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter query"
+            android:hint="@string/search_bar_hint_text"
             app:layout_scrollFlags="enterAlways"
             app:navigationIconTint="#BB1020"/>
 
@@ -168,7 +169,7 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Enter query"
+        android:hint="@string/search_bar_hint_text"
         app:layout_anchor="@id/searchBar"
         app:layout_anchorGravity="top"
         >
