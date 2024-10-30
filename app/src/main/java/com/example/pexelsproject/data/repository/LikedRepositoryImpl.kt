@@ -1,8 +1,8 @@
 package com.example.pexelsproject.data.repository
 
 import android.util.Log
-import com.example.pexelsproject.data.mappers.asLikedPhotoEntity
 import com.example.pexelsproject.data.mappers.asPhoto
+import com.example.pexelsproject.data.mappers.asPhotoEntity
 import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.data.source.dao.liked.LikedPhotosDatabase
 import com.example.pexelsproject.domain.repository.LikedRepository
@@ -17,7 +17,7 @@ class LikedRepositoryImpl @Inject constructor(
 
     override suspend fun addPhotoToLikedDatabase(photoToAdd: Photo) {
         try {
-            database.dao.addPhotoToLikedDatabase(photoToAdd.asLikedPhotoEntity())
+            database.dao.addPhotoToDatabase(photoToAdd.asPhotoEntity())
         }catch (e: Exception){
             Log.e("LikedDatabase-addPhoto", e.message.toString())
         }
@@ -25,7 +25,7 @@ class LikedRepositoryImpl @Inject constructor(
 
     override suspend fun deletePhotoFromLikedDatabase(photoToDelete: Photo) {
         try {
-            database.dao.deletePhotoFromLikedDatabase(photoToDelete.asLikedPhotoEntity())
+            database.dao.deletePhotoFromDatabase(photoToDelete.asPhotoEntity())
         }catch (e: Exception){
             Log.e("LikedDatabase-deletePhoto", e.message.toString())
         }
@@ -33,7 +33,7 @@ class LikedRepositoryImpl @Inject constructor(
 
     override suspend fun getAllPhotosFromLikedDatabase(): List<Photo> {
         val photos = try {
-            database.dao.getAllPhotosFromLikedDatabase().map { it.asPhoto() }
+            database.dao.getAllPhotosFromDatabase().map { it.asPhoto() }
         } catch (e: Exception){
             Log.e("LikedDatabase-getAllFavourites", e.message.toString())
             emptyList()

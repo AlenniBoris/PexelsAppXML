@@ -1,4 +1,4 @@
-package com.example.pexelsproject.data.source.dao.bookmarks.model
+package com.example.pexelsproject.data.source.dao.model
 
 data class PhotoSrcListEntity(
     val original: String,

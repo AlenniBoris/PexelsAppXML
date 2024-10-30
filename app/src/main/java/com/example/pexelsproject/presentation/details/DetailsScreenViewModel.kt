@@ -37,7 +37,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val networkGetPhotoByIdUseCase: NetworkGetPhotoByIdUseCase,
     private val bookmarksDeletePhotoFromDatabaseUseCase: BookmarksDeletePhotoFromDatabaseUseCase,
     private val bookmarksAddPhotoFromDatabaseByIdUseCase: BookmarksAddPhotoToDatabaseUseCase,
-    private val  bookmarksGetPhotoByIdUseCase: BookmarksGetPhotoFromDatabaseByIdUseCase,
+    private val bookmarksGetPhotoByIdUseCase: BookmarksGetPhotoFromDatabaseByIdUseCase,
     private val bookmarksCountByIdUseCase: BookmarksCountByIdUseCase,
     private val likedCountByIdUseCase: LikedCountByIdUseCase,
     private val likedAddPhotoToDatabaseUseCase: LikedAddPhotoToDatabaseUseCase,
@@ -127,7 +127,12 @@ class DetailsScreenViewModel @Inject constructor(
 
     private fun assignPhoto(photo: Photo?){
         screenState.update { state ->
-            state.copy(currentPhoto = photo)
+            val someErrorOccurred = photo == null
+
+            state.copy(
+                currentPhoto = photo,
+                someErrorOccurred = someErrorOccurred
+            )
         }
     }
 

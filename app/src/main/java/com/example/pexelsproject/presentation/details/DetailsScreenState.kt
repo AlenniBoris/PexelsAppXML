@@ -6,4 +6,5 @@ data class DetailsScreenState(
     val currentPhoto: Photo? = null,
     val photoIsFavourite: Boolean = false,
     val photoIsLiked: Boolean = false,
+    val someErrorOccurred: Boolean  = false
 )

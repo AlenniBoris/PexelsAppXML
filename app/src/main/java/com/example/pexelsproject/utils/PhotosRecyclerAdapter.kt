@@ -1,18 +1,30 @@
 package com.example.pexelsproject.utils
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.domain.model.Photo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PhotosRecyclerAdapter (
+    private val context: Context,
     private val onItemClick: (Int) -> Unit
 ): RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
 
@@ -43,7 +55,20 @@ class PhotosRecyclerAdapter (
 
         //Item click
         holder.itemView.setOnClickListener {view ->
-            onItemClick(current.id)
+            val animFadeIn: Animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+            animFadeIn.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                }
+
+                override fun onAnimationEnd(animation: Animation) {
+                    onItemClick(current.id)
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {
+                }
+            })
+
+            view.startAnimation(animFadeIn)
         }
 
     }

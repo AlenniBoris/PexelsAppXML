@@ -61,7 +61,6 @@ class HomeScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Collections
-
         viewModel.scrollEvent
             .onEach {
                 binding.rvFeaturedCollections.scrollToPosition(0)
@@ -81,7 +80,7 @@ class HomeScreenFragment() : Fragment() {
         binding.rvFeaturedCollections.adapter = featuredCollectionsAdapter
 
         //Photos
-        photosAdapter = PhotosRecyclerAdapter(){ id ->
+        photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
             PexelsApplication.router.navigateTo(
                 Screen.DetailsScreen(id, "home_screen")
             )
@@ -101,8 +100,6 @@ class HomeScreenFragment() : Fragment() {
         binding.searchBar.setOnClickListener {
             binding.searchView.show()
         }
-
-
 
         viewModel.screenState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -133,6 +130,7 @@ class HomeScreenFragment() : Fragment() {
         val isActive = state.isActive
 
         binding.searchBar.setText(state.queryText)
+        Log.d("SEARCH BAR", "Text = ${state.queryText}")
 
         binding.searchView.editText.setOnEditorActionListener { v, _, _ ->
             val enteredQuery = v?.text.toString()
@@ -148,7 +146,7 @@ class HomeScreenFragment() : Fragment() {
 
         if (ExtraFunctions.checkHasInternetConnection(applicationContext)){
 
-            if (state.photos.isEmpty()){
+            if (state.errorState){
                 binding.nsvPhotos.visibility = View.GONE
                 binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE

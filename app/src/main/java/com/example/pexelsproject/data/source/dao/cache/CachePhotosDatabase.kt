@@ -1,4 +1,4 @@
-package com.example.pexelsproject.data.source.dao.bookmarks
+package com.example.pexelsproject.data.source.dao.cache
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -10,6 +10,6 @@ import com.example.pexelsproject.data.source.dao.model.PhotoEntity
     version = 1,
     exportSchema = false
 )
-abstract class BookmarksDatabase: RoomDatabase() {
+abstract class CachePhotosDatabase: RoomDatabase() {
     abstract val dao: PhotoDatabaseDao
 }

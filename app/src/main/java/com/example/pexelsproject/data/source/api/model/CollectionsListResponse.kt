@@ -7,7 +7,8 @@ data class CollectionsListResponse(
     val id: String,
     val title: String,
     val description: String?,
-    val private: Boolean,
+    @SerializedName("private")
+    val isPrivate: Boolean,
     @SerializedName("media_count")
     val mediaCount: Int,
     @SerializedName("photos_count")

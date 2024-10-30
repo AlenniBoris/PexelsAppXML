@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_placeholder"
         android:contentDescription="@string/icon_item_image_description"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        />
 
     <TextView
         android:id="@+id/tvItemTitle"

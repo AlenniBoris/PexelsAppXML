@@ -131,7 +131,7 @@ class DetailsScreenFragment : Fragment() {
 
         if (ExtraFunctions.checkHasInternetConnection(applicationContext)) {
 
-            if (state.currentPhoto == null) {
+            if (state.someErrorOccurred) {
                 binding.svDetailsNotErrorScreen.visibility = View.GONE
                 binding.flDetailsImageNotFoundErrorLayout.visibility = View.VISIBLE
             } else {

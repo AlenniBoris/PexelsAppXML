@@ -1,24 +1,24 @@
 package com.example.pexelsproject.presentation.home
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pexelsproject.data.repository.NetworkRepositoryImpl
+import com.example.pexelsproject.domain.usecase.cache.CacheClearDataUseCase
+import com.example.pexelsproject.domain.usecase.cache.CacheSaveDataUseCase
+import com.example.pexelsproject.domain.usecase.cache.CacheGetAllDataUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetCuratedPhotosUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetFeaturedCollectionUseCase
-import com.example.pexelsproject.domain.usecase.network.NetworkGetPhotoByIdUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetSearchedPhotosUseCase
-import com.example.pexelsproject.utils.Constants
+import com.example.pexelsproject.utils.ExtraFunctions
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,7 +29,11 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val networkGetSearchedPhotosUseCase: NetworkGetSearchedPhotosUseCase,
     private val networkGetFeaturedCollectionUseCase: NetworkGetFeaturedCollectionUseCase,
-    private val networkGetCuratedPhotosUseCase: NetworkGetCuratedPhotosUseCase
+    private val networkGetCuratedPhotosUseCase: NetworkGetCuratedPhotosUseCase,
+    private val cacheGetAllDataUseCase: CacheGetAllDataUseCase,
+    private val cacheSaveDataUseCase: CacheSaveDataUseCase,
+    private val cacheClearDataUseCase: CacheClearDataUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel(){
 
     val screenState = MutableStateFlow(HomeScreenState())
@@ -39,9 +43,29 @@ class HomeScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            initialAction()
+        }
+    }
+
+    private suspend fun initialAction(){
+
+        if (ExtraFunctions.checkHasInternetConnection(context)){
             getCuratedPhotos()
             getFeaturedCollection()
+        }else{
+            val cachedQuery = ExtraFunctions.readLastQueryFromFile(context)
+            queryTextChanged(cachedQuery)
+
+            val (cachedPhotos, cachedCollections) = cacheGetAllDataUseCase.invoke()
+
+            screenState.update { state ->
+                state.copy(
+                    photos = cachedPhotos,
+                    featuredCollections = cachedCollections
+                )
+            }
         }
+
     }
 
     fun internetRetryEventHandler(query: String){
@@ -91,6 +115,10 @@ class HomeScreenViewModel @Inject constructor(
                 initialFeaturedCollections = featuredList
             )
         }
+        if (featuredList.isNotEmpty()){
+            cacheSaveDataUseCase.invokeSaveCollections(featuredList)
+            Log.d("COLLECTIONS=", "SAVED collections")
+        }
     }
 
     suspend fun getCuratedPhotos(){
@@ -101,6 +129,15 @@ class HomeScreenViewModel @Inject constructor(
                 photos = curatedList
             )
         }
+        if (curatedList.isNotEmpty()){
+            screenState.update { state ->
+                state.copy(
+                    cachedQuery = ""
+                )
+            }
+            cacheSaveDataUseCase.invokeSavePhotos(curatedList)
+            ExtraFunctions.writeLastQueryToFile("", context)
+        }
     }
 
     suspend fun getQueryPhotos(query: String){
@@ -110,6 +147,15 @@ class HomeScreenViewModel @Inject constructor(
                 errorState = queryPhotos.isEmpty(),
                 photos = queryPhotos
             )
+        }
+        if (queryPhotos.isNotEmpty()){
+            screenState.update { state ->
+                state.copy(
+                    cachedQuery = query
+                )
+            }
+            cacheSaveDataUseCase.invokeSavePhotos(queryPhotos)
+            ExtraFunctions.writeLastQueryToFile(query, context)
         }
     }
 
@@ -142,6 +188,14 @@ class HomeScreenViewModel @Inject constructor(
 
         viewModelScope.launch {
             _scrollEvent.send(Unit)
+        }
+    }
+
+    fun clearCache(){
+        viewModelScope.launch {
+//            cacheClearDataUseCase.invokeDeleteCollections()
+            cacheClearDataUseCase.invokeDeletePhotos()
+            cacheClearDataUseCase.invokeDeleteQuery()
         }
     }
 

@@ -9,12 +9,13 @@ data class HomeScreenState(
     val isActive: Boolean = false,
     val history: Set<String> = emptySet(),
     val queryText: String = "",
+    val cachedQuery: String = "",
     val featuredCollections: List<Collection> = listOf(
         Collection(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -23,7 +24,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -32,7 +33,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -41,7 +42,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -50,7 +51,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -59,7 +60,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0
@@ -68,7 +69,7 @@ data class HomeScreenState(
             id = "",
             title = "",
             description = "",
-            private = false,
+            isPrivate = false,
             mediaCount = 0,
             photosCount = 0,
             videosCount = 0

@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.example.pexelsproject.data.source.api.PhotoAPIService
 import com.example.pexelsproject.data.source.dao.bookmarks.BookmarksDatabase
+import com.example.pexelsproject.data.source.dao.cache.CacheCollectionsDatabase
+import com.example.pexelsproject.data.source.dao.cache.CachePhotosDatabase
 import com.example.pexelsproject.data.source.dao.liked.LikedPhotosDatabase
 import com.example.pexelsproject.utils.Constants
 import dagger.Module
@@ -22,6 +24,8 @@ object Injector{
     private const val HEADER_AUTHORIZATION = "Authorization"
     private const val BOOKMARKS_DATABASE_FILE = "bookmarks-data.db"
     private const val LIKED_DATABASE_FILE = "liked-data.db"
+    private const val CACHE_PHOTOS_DATABASE_FILE = "cache-photos-data.db"
+    private const val CACHE_COLLECTIONS_DATABASE_FILE = "cache-collections-data.db"
 
     @Singleton
     @Provides
@@ -70,6 +74,24 @@ object Injector{
             application,
             LikedPhotosDatabase::class.java,
             LIKED_DATABASE_FILE
+        ).build()
+
+    @Provides
+    @Singleton
+    fun provideCachePhotosDatabase(application: Application): CachePhotosDatabase =
+        Room.databaseBuilder(
+            application,
+            CachePhotosDatabase::class.java,
+            CACHE_PHOTOS_DATABASE_FILE
+        ).build()
+
+    @Provides
+    @Singleton
+    fun provideCacheCollectionsDatabase(application: Application): CacheCollectionsDatabase =
+        Room.databaseBuilder(
+            application,
+            CacheCollectionsDatabase::class.java,
+            CACHE_COLLECTIONS_DATABASE_FILE
         ).build()
 
 }

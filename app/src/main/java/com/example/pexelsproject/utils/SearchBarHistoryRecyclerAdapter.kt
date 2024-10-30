@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pexelsproject.R
@@ -78,6 +79,14 @@ class SearchBarHistoryRecyclerAdapter(
         holder.itemView.setOnClickListener {
             onItemClick(queryText)
         }
+
+
+        holder.tvItemText.setBackgroundColor(
+            ContextCompat.getColor(holder.itemView.context, R.color.main_color)
+        )
+        holder.tvItemText.setTextColor(
+            ContextCompat.getColor(holder.itemView.context, R.color.on_main_color)
+        )
     }
 
     class SearchBarHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

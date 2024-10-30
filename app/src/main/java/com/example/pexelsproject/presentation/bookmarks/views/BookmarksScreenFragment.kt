@@ -51,7 +51,7 @@ class BookmarksScreenFragment() : Fragment() {
         applicationContext = requireActivity().applicationContext
 
         //Photos
-        photosAdapter = PhotosRecyclerAdapter(){ id ->
+        photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
             PexelsApplication.router.navigateTo(
                 Screen.DetailsScreen(id, "bookmarks_screen")
             )

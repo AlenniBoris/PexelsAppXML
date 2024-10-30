@@ -16,7 +16,7 @@ class BookmarksRepositoryImpl @Inject constructor(
 
     override suspend fun addPhotoToBookmarksDatabase(photoToAdd: Photo) {
         try {
-            database.dao.addPhotoToBookmarksDatabase(photoToAdd.asPhotoEntity())
+            database.dao.addPhotoToDatabase(photoToAdd.asPhotoEntity())
         }catch (e: Exception){
             Log.e("BookmarksDatabase-addPhoto", e.message.toString())
         }
@@ -24,7 +24,7 @@ class BookmarksRepositoryImpl @Inject constructor(
 
     override suspend fun deletePhotoFromBookmarksDatabase(photoToDelete: Photo) {
         try {
-            database.dao.deletePhotoFromBookmarksDatabase(photoToDelete.asPhotoEntity())
+            database.dao.deletePhotoFromDatabase(photoToDelete.asPhotoEntity())
         }catch (e: Exception){
             Log.e("BookmarksDatabase-deletePhoto", e.message.toString())
         }
@@ -32,7 +32,7 @@ class BookmarksRepositoryImpl @Inject constructor(
 
     override suspend fun getAllPhotosFromBookmarksDatabase(): List<Photo> {
         val photos = try {
-            database.dao.getAllPhotosFromBookmarksDatabase().map { it.asPhoto() }
+            database.dao.getAllPhotosFromDatabase().map { it.asPhoto() }
         } catch (e: Exception){
             Log.e("BookmarksDatabase-getAllFavourites", e.message.toString())
             emptyList()
@@ -42,7 +42,7 @@ class BookmarksRepositoryImpl @Inject constructor(
 
     override suspend fun getPhotoFromBookmarksDatabaseById(id: Int): Photo? {
         val photo = try {
-            database.dao.getPhotoFromBookmarksDatabaseById(id).asPhoto()
+            database.dao.getPhotoFromDatabaseById(id).asPhoto()
         }catch (e: Exception){
             Log.e("BookmarksDatabase-getFavouriteById", e.message.toString())
             null

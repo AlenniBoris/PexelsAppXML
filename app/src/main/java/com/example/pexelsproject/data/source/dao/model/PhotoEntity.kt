@@ -1,11 +1,11 @@
-package com.example.pexelsproject.data.source.dao.bookmarks.model
+package com.example.pexelsproject.data.source.dao.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity("bookmarks_photo")
+@Entity("database_photos")
 data class PhotoEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
