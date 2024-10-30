@@ -144,44 +144,61 @@ class HomeScreenFragment() : Fragment() {
             PexelsApplication.router.navigateTo(Screen.LikedScreen())
         }
 
-        if (ExtraFunctions.checkHasInternetConnection(applicationContext)){
+        if (state.isLoading){
 
-            if (state.errorState){
-                binding.nsvPhotos.visibility = View.GONE
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
+            binding.nsvPhotos.visibility = View.GONE
+            binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
+            binding.nsvNoResultsFoundLayout.visibility = View.GONE
 
-                binding.rvFeaturedCollections.visibility = View.VISIBLE
-                binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
-            }else{
-                binding.nsvNoResultsFoundLayout.visibility = View.GONE
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
-
-                binding.rvFeaturedCollections.visibility = View.VISIBLE
-                binding.nsvPhotos.visibility = View.VISIBLE
-            }
+            binding.rvFeaturedCollections.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
 
         }else{
 
-            if (state.photos.isNotEmpty()){
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
-                binding.nsvNoResultsFoundLayout.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
+            if (ExtraFunctions.checkHasInternetConnection(applicationContext)){
 
-                binding.rvFeaturedCollections.visibility = View.VISIBLE
-                binding.nsvPhotos.visibility = View.VISIBLE
-            }
-            else{
-                binding.nsvNoResultsFoundLayout.visibility = View.GONE
-                binding.nsvPhotos.visibility = View.GONE
-                binding.rvFeaturedCollections.visibility = View.GONE
+                if (state.noPhotosFound){
+                    binding.nsvPhotos.visibility = View.GONE
+                    binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
 
-                binding.progressBar.visibility = View.VISIBLE
-                binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
+                    binding.rvFeaturedCollections.visibility = View.VISIBLE
+                    binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
+                }else{
+                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+                    binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+
+                    binding.rvFeaturedCollections.visibility = View.VISIBLE
+                    binding.nsvPhotos.visibility = View.VISIBLE
+                }
+
+            }else{
+
+                if (state.photos.isNotEmpty()){
+                    binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
+                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+
+                    binding.rvFeaturedCollections.visibility = View.VISIBLE
+                    binding.nsvPhotos.visibility = View.VISIBLE
+                }
+                else{
+                    binding.nsvNoResultsFoundLayout.visibility = View.GONE
+                    binding.nsvPhotos.visibility = View.GONE
+                    binding.rvFeaturedCollections.visibility = View.GONE
+
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.nsvNoInternetConnectionResultLayout.visibility = View.VISIBLE
+                }
+
             }
 
         }
+
+
+
 
     }
 }

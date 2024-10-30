@@ -125,6 +125,14 @@
                 tools:listitem="@layout/photo_item_layout"
                 android:layout_marginHorizontal="20dp"/>
 
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/photosProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:progressTint="#BB1020"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

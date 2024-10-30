@@ -5,11 +5,11 @@ import com.example.pexelsproject.domain.model.Photo
 
 data class HomeScreenState(
     val photos: List<Photo> = emptyList(),
-    val errorState: Boolean = false,
+    val noPhotosFound: Boolean = false,
+    val isLoading: Boolean = false,
     val isActive: Boolean = false,
     val history: Set<String> = emptySet(),
     val queryText: String = "",
-    val cachedQuery: String = "",
     val featuredCollections: List<Collection> = listOf(
         Collection(
             id = "",

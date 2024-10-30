@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -53,10 +54,17 @@ class HomeScreenViewModel @Inject constructor(
             getCuratedPhotos()
             getFeaturedCollection()
         }else{
+
+            changeIsLoading(true)
+
             val cachedQuery = ExtraFunctions.readLastQueryFromFile(context)
             queryTextChanged(cachedQuery)
 
             val (cachedPhotos, cachedCollections) = cacheGetAllDataUseCase.invoke()
+
+            Log.d("EXTRACTING CACHED", "PHOTOS = ${cachedPhotos.isEmpty()} , COLLECTIONS = ${cachedCollections.isEmpty()}")
+
+            changeIsLoading(false)
 
             screenState.update { state ->
                 state.copy(
@@ -66,6 +74,14 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
 
+    }
+
+    private fun changeIsLoading(isLoading: Boolean){
+        screenState.update { state ->
+            state.copy(
+                isLoading = isLoading
+            )
+        }
     }
 
     fun internetRetryEventHandler(query: String){
@@ -122,40 +138,49 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     suspend fun getCuratedPhotos(){
+
+        changeIsLoading(true)
+
         val curatedList = networkGetCuratedPhotosUseCase.invoke()
+
+        changeIsLoading(false)
+
         screenState.update { state ->
             state.copy(
-                errorState = curatedList.isEmpty(),
+                noPhotosFound = curatedList.isEmpty(),
                 photos = curatedList
             )
         }
+
+
         if (curatedList.isNotEmpty()){
-            screenState.update { state ->
-                state.copy(
-                    cachedQuery = ""
-                )
+            withContext(Dispatchers.IO){
+                cacheSaveDataUseCase.invokeSavePhotos(curatedList)
+                ExtraFunctions.writeLastQueryToFile("", context)
             }
-            cacheSaveDataUseCase.invokeSavePhotos(curatedList)
-            ExtraFunctions.writeLastQueryToFile("", context)
         }
     }
 
     suspend fun getQueryPhotos(query: String){
+
+        changeIsLoading(true)
+
         val queryPhotos = networkGetSearchedPhotosUseCase.invoke(query)
+
+        changeIsLoading(false)
+
         screenState.update { state ->
             state.copy(
-                errorState = queryPhotos.isEmpty(),
+                noPhotosFound = queryPhotos.isEmpty(),
                 photos = queryPhotos
             )
         }
+
         if (queryPhotos.isNotEmpty()){
-            screenState.update { state ->
-                state.copy(
-                    cachedQuery = query
-                )
+            withContext(Dispatchers.IO){
+                cacheSaveDataUseCase.invokeSavePhotos(queryPhotos)
+                ExtraFunctions.writeLastQueryToFile(query, context)
             }
-            cacheSaveDataUseCase.invokeSavePhotos(queryPhotos)
-            ExtraFunctions.writeLastQueryToFile(query, context)
         }
     }
 
