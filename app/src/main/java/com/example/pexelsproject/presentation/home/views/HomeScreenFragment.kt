@@ -19,9 +19,9 @@ import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.presentation.home.HomeScreenState
 import com.example.pexelsproject.presentation.home.HomeScreenViewModel
 import com.example.pexelsproject.utils.ExtraFunctions
-import com.example.pexelsproject.utils.FeaturedCollectionsRecyclerAdapter
-import com.example.pexelsproject.utils.PhotosRecyclerAdapter
-import com.example.pexelsproject.utils.SearchBarHistoryRecyclerAdapter
+import com.example.pexelsproject.presentation.uikit.adapters.FeaturedCollectionsRecyclerAdapter
+import com.example.pexelsproject.presentation.uikit.adapters.PhotosRecyclerAdapter
+import com.example.pexelsproject.presentation.uikit.adapters.SearchBarHistoryRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -82,7 +82,7 @@ class HomeScreenFragment() : Fragment() {
         //Photos
         photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
             PexelsApplication.router.navigateTo(
-                Screen.DetailsScreen(id, "home_screen")
+                Screen.detailsScreen(id, "home_screen")
             )
         }
         binding.rvPhotosMain.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
@@ -141,7 +141,7 @@ class HomeScreenFragment() : Fragment() {
         }
 
         binding.fab.setOnClickListener{
-            PexelsApplication.router.navigateTo(Screen.LikedScreen())
+            PexelsApplication.router.navigateTo(Screen.likedScreen())
         }
 
         if (ExtraFunctions.checkHasInternetConnection(applicationContext)){

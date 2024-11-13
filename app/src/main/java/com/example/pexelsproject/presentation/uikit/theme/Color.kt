@@ -1,4 +1,4 @@
-package com.example.pexelsproject.ui.theme
+package com.example.pexelsproject.presentation.uikit.theme
 
 import androidx.compose.ui.graphics.Color
 

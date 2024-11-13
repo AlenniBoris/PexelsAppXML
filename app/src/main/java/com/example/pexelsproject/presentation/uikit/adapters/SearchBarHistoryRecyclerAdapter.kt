@@ -1,4 +1,4 @@
-package com.example.pexelsproject.utils
+package com.example.pexelsproject.presentation.uikit.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +27,7 @@ class SearchBarHistoryRecyclerAdapter(
         return listOfSearches.size
     }
 
-    override fun onBindViewHolder(holder: SearchBarHistoryRecyclerAdapter.SearchBarHistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchBarHistoryViewHolder, position: Int) {
         val current = listOfSearches[position]
         holder.tvItemText.text = current
     }

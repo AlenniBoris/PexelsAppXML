@@ -1,7 +1,5 @@
 package com.example.pexelsproject.presentation.liked.views
 
-import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,7 +22,6 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.presentation.bookmarks.BookmarksScreenViewModel
 import com.example.pexelsproject.presentation.liked.LikedPhotosViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
@@ -44,7 +41,7 @@ fun LikedScreen(
         topBar = {
             AppTopBar(
                 navigationAction = {
-                    PexelsApplication.router.navigateTo(Screen.MainAppScreens("liked_screen"))
+                    PexelsApplication.router.navigateTo(Screen.mainAppScreens("liked_screen"))
                 }
             )
         }
@@ -93,7 +90,7 @@ fun LikedScreen(
             }else if(state.isNoLiked) {
                 EmptyScreen(
                     onExploreClicked = {
-                        PexelsApplication.router.navigateTo(Screen.MainAppScreens("liked_screen"))
+                        PexelsApplication.router.navigateTo(Screen.mainAppScreens("liked_screen"))
                     },
                     text = stringResource(R.string.noting_saved_yet_text),
                 )

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -17,6 +19,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+        val keyStoreFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(keyStoreFile.inputStream())
+
+        val apiKey = properties.getProperty("API_KEY") ?: ""
+            buildConfigField(
+                type = "String",
+                name = "API_KEY",
+                value = apiKey
+            )
     }
 
     buildTypes {
@@ -39,6 +53,7 @@ android {
         kotlinCompilerExtensionVersion = "1.5.2"
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         compose = true
     }
@@ -78,8 +93,6 @@ dependencies {
 
     //Cicerone
     implementation("com.github.terrakok:cicerone:7.1")
-    //Cicerone
-//    implementation("com.github.terrakok:cicerone:X.X.X")
 
     //Actvity viewModels
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -91,7 +104,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
 
 
-    val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
+    val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
@@ -124,9 +137,13 @@ dependencies {
     implementation("androidx.compose.material3.adaptive:adaptive")
 
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.activity:activity-compose:1.9.2")
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
+    // Optional - Integration with LiveData
+    implementation("androidx.compose.runtime:runtime-livedata")
+    // Optional - Integration with RxJava
+    implementation("androidx.compose.runtime:runtime-rxjava2")
 
     //coil
     implementation("io.coil-kt:coil:2.4.0")

@@ -2,6 +2,7 @@ package com.example.pexelsproject.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.pexelsproject.BuildConfig
 import com.example.pexelsproject.data.source.api.PhotoAPIService
 import com.example.pexelsproject.data.source.dao.bookmarks.BookmarksDatabase
 import com.example.pexelsproject.data.source.dao.cache.CacheCollectionsDatabase
@@ -39,13 +40,14 @@ object Injector{
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader(HEADER_AUTHORIZATION, Constants.API_KEY)
+                .addHeader(HEADER_AUTHORIZATION, BuildConfig.API_KEY)
                 .build()
 
             chain.proceed(request)
         }
         .addNetworkInterceptor(loggingInterceptor)
         .build()
+
 
     @Provides
     @Singleton

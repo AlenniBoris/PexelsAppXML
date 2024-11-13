@@ -11,11 +11,13 @@ lifecycleViewmodelKtx = "2.8.6"
 material = "1.12.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+uikitTooling = "1.0.0"
 
 [libraries]
 accompanist-swipetodismiss = { module = "com.google.accompanist:accompanist-swipetodismiss", version.ref = "accompanistSwipetodismiss" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-uikit-tooling = { module = "androidx.compose.uikit:uikit-tooling" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -23,6 +25,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+uikit-tooling = { module = "androidx.compose.uikit:uikit-tooling", version.ref = "uikitTooling" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

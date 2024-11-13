@@ -7,11 +7,7 @@ import com.example.pexelsproject.presentation.liked.views.LikedScreenFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 object Screen {
-//    fun HomeScreen() = FragmentScreen{ HomeScreenFragment() }
-//    fun BookmarksScreen() = FragmentScreen { BookmarksScreenFragment() }
-
-
-    fun DetailsScreen(id: Int, previousDestination: String) = FragmentScreen {
+    fun detailsScreen(id: Int, previousDestination: String) = FragmentScreen {
         DetailsScreenFragment().apply {
             arguments = Bundle().apply {
                 putInt("key_pic_id", id)
@@ -19,15 +15,14 @@ object Screen {
             }
         }
     }
-    fun MainAppScreens(previousDestination: String) = FragmentScreen{
+    fun mainAppScreens(previousDestination: String) = FragmentScreen{
         MainAppFragment().apply {
             arguments = Bundle().apply {
                 putString("key_prev_dest", previousDestination)
             }
         }
     }
-    fun LikedScreen() = FragmentScreen{
+    fun likedScreen() = FragmentScreen{
         LikedScreenFragment()
     }
-
 }

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null){
-            PexelsApplication.router.newRootScreen(Screen.MainAppScreens("home_screen"))
+            PexelsApplication.router.newRootScreen(Screen.mainAppScreens("home_screen"))
         }
     }
 

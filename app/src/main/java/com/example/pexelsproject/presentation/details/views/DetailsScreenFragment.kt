@@ -107,7 +107,7 @@ class DetailsScreenFragment : Fragment() {
 
         binding.ibDetailsBack.setOnClickListener {
             PexelsApplication.router.navigateTo(
-                Screen.MainAppScreens(prevDestination)
+                Screen.mainAppScreens(prevDestination)
             )
         }
 
@@ -118,13 +118,13 @@ class DetailsScreenFragment : Fragment() {
 
         binding.ibDetailsNoImageFoundBack.setOnClickListener {
             PexelsApplication.router.navigateTo(
-                Screen.MainAppScreens(prevDestination)
+                Screen.mainAppScreens(prevDestination)
             )
         }
 
         binding.tvExploreAgainButton.setOnClickListener {
             PexelsApplication.router.navigateTo(
-                Screen.MainAppScreens("home_screen")
+                Screen.mainAppScreens("home_screen")
             )
         }
 

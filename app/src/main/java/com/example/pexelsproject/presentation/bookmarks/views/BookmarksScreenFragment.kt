@@ -16,7 +16,7 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.presentation.bookmarks.BookmarksScreenState
 import com.example.pexelsproject.presentation.bookmarks.BookmarksScreenViewModel
-import com.example.pexelsproject.utils.PhotosRecyclerAdapter
+import com.example.pexelsproject.presentation.uikit.adapters.PhotosRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,7 +53,7 @@ class BookmarksScreenFragment() : Fragment() {
         //Photos
         photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
             PexelsApplication.router.navigateTo(
-                Screen.DetailsScreen(id, "bookmarks_screen")
+                Screen.detailsScreen(id, "bookmarks_screen")
             )
         }
         binding.rvPhotosBookmarks.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
@@ -61,7 +61,7 @@ class BookmarksScreenFragment() : Fragment() {
 
         binding.tvExploreButton.setOnClickListener {
             PexelsApplication.router.navigateTo(
-                Screen.MainAppScreens("from_bookmarks_screen")
+                Screen.mainAppScreens("from_bookmarks_screen")
             )
         }
 
