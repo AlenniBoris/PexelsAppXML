@@ -19,7 +19,8 @@ class SearchBarHistoryRecyclerAdapter(
         parent: ViewGroup,
         viewType: Int
     ): SearchBarHistoryViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.featured_collections_item_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.featured_collections_item_layout, parent, false)
         return SearchBarHistoryViewHolder(itemView)
     }
 
@@ -32,7 +33,7 @@ class SearchBarHistoryRecyclerAdapter(
         holder.tvItemText.text = current
     }
 
-    fun submitList(newItems: List<String>){
+    fun submitList(newItems: List<String>) {
         val difUtil = SearchBarDiffUtil(
             oldList = listOfSearches,
             newList = newItems
@@ -48,7 +49,7 @@ class SearchBarHistoryRecyclerAdapter(
     class SearchBarDiffUtil(
         private val oldList: List<String>,
         private val newList: List<String>
-    ): DiffUtil.Callback(){
+    ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size
         }
@@ -89,7 +90,7 @@ class SearchBarHistoryRecyclerAdapter(
         )
     }
 
-    class SearchBarHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class SearchBarHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvItemText: TextView = itemView.findViewById(R.id.tvFeaturedCollectionTitle)
     }
 }

@@ -15,16 +15,18 @@ import com.bumptech.glide.Glide
 import com.example.pexelsproject.R
 import com.example.pexelsproject.domain.model.Photo
 
-class PhotosRecyclerAdapter (
+class PhotosRecyclerAdapter(
     private val context: Context,
     private val onItemClick: (Int) -> Unit
-): RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
+) : RecyclerView.Adapter<PhotosRecyclerAdapter.PhotosRecyclerViewHolder>() {
 
     private var listOfPhotos: List<Photo> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosRecyclerViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.photo_item_layout,
-            parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.photo_item_layout,
+            parent, false
+        )
         return PhotosRecyclerViewHolder(itemView)
     }
 
@@ -45,8 +47,7 @@ class PhotosRecyclerAdapter (
             .placeholder(R.drawable.ic_placeholder)
             .into(holder.ivItemImage)
 
-        //Item click
-        holder.itemView.setOnClickListener {view ->
+        holder.itemView.setOnClickListener { view ->
             val animFadeIn: Animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
             animFadeIn.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation) {
@@ -97,7 +98,7 @@ class PhotosRecyclerAdapter (
 
     }
 
-    class PhotosRecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class PhotosRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivItemImage: ImageView = itemView.findViewById(R.id.ivItemImage)
         val tvItemText: TextView = itemView.findViewById(R.id.tvItemTitle)
     }

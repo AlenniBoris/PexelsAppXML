@@ -1,10 +1,10 @@
 package com.example.pexelsproject.presentation.app
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.pexelsproject.R
 import com.example.pexelsproject.databinding.FragmentMainAppBinding
@@ -17,7 +17,7 @@ class MainAppFragment : Fragment() {
     private var mainAppFragmentBinding: FragmentMainAppBinding? = null
     private val binding get() = mainAppFragmentBinding!!
 
-    private var _prevDestination : String? = null
+    private var _prevDestination: String? = null
     private val prevDestination get() = _prevDestination!!
 
     private val viewModel: HomeScreenViewModel by activityViewModels()
@@ -30,7 +30,6 @@ class MainAppFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         mainAppFragmentBinding = FragmentMainAppBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,33 +37,35 @@ class MainAppFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
 
             _prevDestination = arguments?.getString("key_prev_dest")
 
-            when(prevDestination){
+            when (prevDestination) {
                 "home_screen", "from_bookmarks_screen", "liked_screen" -> {
                     parentFragmentManager.beginTransaction()
-                        .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(), "HomeScreenFragment")
+                        .replace(
+                            binding.flMainAppFragmentContainer.id,
+                            HomeScreenFragment(),
+                            "HomeScreenFragment"
+                        )
                         .commit()
                     binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_active)
                     binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_not_active)
                 }
+
                 else -> {
                     parentFragmentManager.beginTransaction()
-                        .replace(binding.flMainAppFragmentContainer.id, BookmarksScreenFragment(), "BookmarksFragment")
+                        .replace(
+                            binding.flMainAppFragmentContainer.id,
+                            BookmarksScreenFragment(),
+                            "BookmarksFragment"
+                        )
                         .commit()
                     binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_not_active)
                     binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_active)
                 }
             }
-//
-//            if (prevDestination == "home_screen" || prevDestination == "from_bookmarks_screen" || prevDestination == "liked_screen"){
-//
-//            }else{
-//
-//            }
-
         }
 
         setListenersOnButtons()
@@ -76,15 +77,19 @@ class MainAppFragment : Fragment() {
         mainAppFragmentBinding = null
     }
 
-    private fun setListenersOnButtons(){
+    private fun setListenersOnButtons() {
         binding.ibHomeScreenBtn.setOnClickListener {
             val currentFragment = parentFragmentManager.findFragmentByTag("HomeScreenFragment")
-            if (currentFragment is HomeScreenFragment){
+            if (currentFragment is HomeScreenFragment) {
                 viewModel.queryTextChanged("")
                 viewModel.forceSearchPhoto("")
-            } else{
+            } else {
                 parentFragmentManager.beginTransaction()
-                    .replace(binding.flMainAppFragmentContainer.id, HomeScreenFragment(), "HomeScreenFragment")
+                    .replace(
+                        binding.flMainAppFragmentContainer.id,
+                        HomeScreenFragment(),
+                        "HomeScreenFragment"
+                    )
                     .commit()
             }
             binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_active)
@@ -92,7 +97,11 @@ class MainAppFragment : Fragment() {
         }
         binding.ibBookmarksScreenBtn.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(binding.flMainAppFragmentContainer.id, BookmarksScreenFragment(), "BookmarksFragment")
+                .replace(
+                    binding.flMainAppFragmentContainer.id,
+                    BookmarksScreenFragment(),
+                    "BookmarksFragment"
+                )
                 .commit()
             binding.ibHomeScreenBtn.setImageResource(R.drawable.icon_home_not_active)
             binding.ibBookmarksScreenBtn.setImageResource(R.drawable.icon_favourites_active)

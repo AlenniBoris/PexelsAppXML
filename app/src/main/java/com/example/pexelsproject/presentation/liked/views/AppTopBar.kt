@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.pexelsproject.R
 
 @Composable
-fun AppTopBar(navigationAction : () -> Unit){
+fun AppTopBar(navigationAction: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +51,9 @@ fun AppTopBar(navigationAction : () -> Unit){
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back_btn_description),
-                    tint = if(isSystemInDarkTheme()){ Color.White } else Color.Black
+                    tint = if (isSystemInDarkTheme()) {
+                        Color.White
+                    } else Color.Black
                 )
             }
         }
@@ -60,7 +62,9 @@ fun AppTopBar(navigationAction : () -> Unit){
         Text(
             text = stringResource(R.string.liked_title),
             fontSize = 18.sp,
-            color = if(isSystemInDarkTheme()){ Color.White } else Color.Black,
+            color = if (isSystemInDarkTheme()) {
+                Color.White
+            } else Color.Black,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

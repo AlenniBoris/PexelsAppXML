@@ -9,7 +9,7 @@ class NetworkGetCuratedPhotosUseCase @Inject constructor(
     private val networkRepository: NetworkRepository
 ) {
 
-    suspend fun invoke(): List<Photo>{
+    suspend fun invoke(): List<Photo> {
         return networkRepository.getCuratedPhotosList(Constants.NUMBER_CURATED, Constants.PER_PAGE)
     }
 

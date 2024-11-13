@@ -8,7 +8,7 @@ class LikedGetAllPhotosFromDatabaseUseCase @Inject constructor(
     private val likedRepository: LikedRepository
 ) {
 
-    suspend fun invoke() : List<Photo>{
+    suspend fun invoke(): List<Photo> {
         return likedRepository.getAllPhotosFromLikedDatabase()
     }
 

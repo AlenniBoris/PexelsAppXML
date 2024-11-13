@@ -25,7 +25,8 @@ class FeaturedCollectionsRecyclerAdapter(
         parent: ViewGroup,
         viewType: Int
     ): CollectionsRecyclerViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.featured_collections_item_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.featured_collections_item_layout, parent, false)
         return CollectionsRecyclerViewHolder(itemView)
     }
 
@@ -41,10 +42,7 @@ class FeaturedCollectionsRecyclerAdapter(
         val current = listOfFeaturedCollections[position]
         holder.tvItemText.text = current.title
 
-        Log.d("binding view holder","binded = ${current.title}")
-        Log.d("selected id", "query = $queryText , selected id = $selectedId , current id = ${current.id}")
-
-        if ((current.id == selectedId) || (current.title == queryText)){
+        if ((current.id == selectedId) || (current.title == queryText)) {
             holder.tvItemText.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.selected_color)
             )
@@ -52,7 +50,7 @@ class FeaturedCollectionsRecyclerAdapter(
                 ContextCompat.getColor(holder.itemView.context, R.color.on_selected_color)
             )
             lastSelectedId = selectedId
-        }else{
+        } else {
             holder.tvItemText.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.main_color)
             )
@@ -78,7 +76,7 @@ class FeaturedCollectionsRecyclerAdapter(
     }
 
 
-    fun submitList(newItems: MutableList<Collection>){
+    fun submitList(newItems: MutableList<Collection>) {
         val difUtil = FeaturedCollectionsDiffUtil(
             oldList = listOfFeaturedCollections,
             newList = newItems
@@ -91,7 +89,7 @@ class FeaturedCollectionsRecyclerAdapter(
         result.dispatchUpdatesTo(this)
     }
 
-    fun submitQueryAndSelectedId(query: String, selectedFeaturedCollectionId: String){
+    fun submitQueryAndSelectedId(query: String, selectedFeaturedCollectionId: String) {
         queryText = query
         selectedId = selectedFeaturedCollectionId
 
@@ -107,7 +105,7 @@ class FeaturedCollectionsRecyclerAdapter(
     class FeaturedCollectionsDiffUtil(
         private val oldList: List<Collection>,
         private val newList: List<Collection>
-    ): DiffUtil.Callback(){
+    ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size
         }
@@ -126,7 +124,7 @@ class FeaturedCollectionsRecyclerAdapter(
 
     }
 
-    class CollectionsRecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class CollectionsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvItemText: TextView = itemView.findViewById(R.id.tvFeaturedCollectionTitle)
     }
 

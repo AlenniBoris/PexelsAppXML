@@ -3,8 +3,8 @@ package com.example.pexelsproject.data.repository
 import android.util.Log
 import com.example.pexelsproject.data.mappers.asPhoto
 import com.example.pexelsproject.data.mappers.asPhotoEntity
-import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.data.source.dao.bookmarks.BookmarksDatabase
+import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.domain.repository.BookmarksRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,12 +12,12 @@ import javax.inject.Singleton
 @Singleton
 class BookmarksRepositoryImpl @Inject constructor(
     private val database: BookmarksDatabase
-): BookmarksRepository {
+) : BookmarksRepository {
 
     override suspend fun addPhotoToBookmarksDatabase(photoToAdd: Photo) {
         try {
             database.dao.addPhotoToDatabase(photoToAdd.asPhotoEntity())
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("BookmarksDatabase-addPhoto", e.message.toString())
         }
     }
@@ -25,7 +25,7 @@ class BookmarksRepositoryImpl @Inject constructor(
     override suspend fun deletePhotoFromBookmarksDatabase(photoToDelete: Photo) {
         try {
             database.dao.deletePhotoFromDatabase(photoToDelete.asPhotoEntity())
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("BookmarksDatabase-deletePhoto", e.message.toString())
         }
     }
@@ -33,7 +33,7 @@ class BookmarksRepositoryImpl @Inject constructor(
     override suspend fun getAllPhotosFromBookmarksDatabase(): List<Photo> {
         val photos = try {
             database.dao.getAllPhotosFromDatabase().map { it.asPhoto() }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("BookmarksDatabase-getAllFavourites", e.message.toString())
             emptyList()
         }
@@ -43,7 +43,7 @@ class BookmarksRepositoryImpl @Inject constructor(
     override suspend fun getPhotoFromBookmarksDatabaseById(id: Int): Photo? {
         val photo = try {
             database.dao.getPhotoFromDatabaseById(id).asPhoto()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("BookmarksDatabase-getFavouriteById", e.message.toString())
             null
         }
@@ -54,7 +54,7 @@ class BookmarksRepositoryImpl @Inject constructor(
     override suspend fun countById(id: Int): Int {
         val count = try {
             database.dao.countById(id)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("BookmarksDatabase-countById", e.message.toString())
             0
         }

@@ -13,7 +13,12 @@ import java.io.IOException
 import java.io.OutputStreamWriter
 
 object ExtraFunctions {
-    fun changeSearch(scope: CoroutineScope, mainScreenViewModel: HomeScreenViewModel, title: String, id: String){
+    fun changeSearch(
+        scope: CoroutineScope,
+        mainScreenViewModel: HomeScreenViewModel,
+        title: String,
+        id: String
+    ) {
         mainScreenViewModel.queryTextChanged(title)
         mainScreenViewModel.selectedFeaturedCollectionIdChanged(id)
         scope.launch {
@@ -21,8 +26,9 @@ object ExtraFunctions {
         }
     }
 
-    fun checkHasInternetConnection(context: Context): Boolean{
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun checkHasInternetConnection(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = connectivityManager.activeNetwork
         val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
 
@@ -54,8 +60,6 @@ object ExtraFunctions {
                 receiveString = inputStream.bufferedReader().use(BufferedReader::readText)
                 inputStream.close()
             }
-
-            Log.d("READING", "Received: $receiveString")
 
             receiveString
         } catch (e: FileNotFoundException) {

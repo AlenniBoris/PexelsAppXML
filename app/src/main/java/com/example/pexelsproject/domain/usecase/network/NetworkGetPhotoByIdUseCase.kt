@@ -8,7 +8,7 @@ class NetworkGetPhotoByIdUseCase @Inject constructor(
     private val networkRepository: NetworkRepository
 ) {
 
-    suspend fun invoke(id: Int): Photo?{
+    suspend fun invoke(id: Int): Photo? {
         return networkRepository.getPhotoById(id)
     }
 

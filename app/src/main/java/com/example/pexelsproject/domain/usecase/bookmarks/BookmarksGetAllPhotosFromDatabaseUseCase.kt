@@ -8,7 +8,7 @@ class BookmarksGetAllPhotosFromDatabaseUseCase @Inject constructor(
     private val bookmarksRepository: BookmarksRepository
 ) {
 
-    suspend fun invoke() : List<Photo>{
+    suspend fun invoke(): List<Photo> {
         return bookmarksRepository.getAllPhotosFromBookmarksDatabase()
     }
 

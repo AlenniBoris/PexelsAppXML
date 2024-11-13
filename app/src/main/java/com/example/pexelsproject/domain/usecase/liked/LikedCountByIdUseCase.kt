@@ -5,9 +5,9 @@ import javax.inject.Inject
 
 class LikedCountByIdUseCase @Inject constructor(
     private val likedRepository: LikedRepository
-){
+) {
 
-    suspend fun invoke(id: Int): Int{
+    suspend fun invoke(id: Int): Int {
         return likedRepository.countById(id)
     }
 

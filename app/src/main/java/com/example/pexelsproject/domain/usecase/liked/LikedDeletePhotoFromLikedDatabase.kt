@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class LikedDeletePhotoFromLikedDatabase @Inject constructor(
     private val likedRepository: LikedRepository
-){
+) {
 
-    suspend fun invoke(photoToDelete: Photo){
+    suspend fun invoke(photoToDelete: Photo) {
         likedRepository.deletePhotoFromLikedDatabase(photoToDelete)
     }
 

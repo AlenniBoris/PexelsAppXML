@@ -2,10 +2,10 @@ package com.example.pexelsproject.presentation.bookmarks.views
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +27,7 @@ class BookmarksScreenFragment() : Fragment() {
     private val viewModel: BookmarksScreenViewModel by viewModels()
 
     private lateinit var applicationContext: Context
-    //Photos
+
     private lateinit var photosAdapter: PhotosRecyclerAdapter
 
     private var bookmarksScreenBinding: FragmentBookmarksScreenBinding? = null
@@ -50,13 +50,13 @@ class BookmarksScreenFragment() : Fragment() {
 
         applicationContext = requireActivity().applicationContext
 
-        //Photos
-        photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
+        photosAdapter = PhotosRecyclerAdapter(applicationContext) { id ->
             PexelsApplication.router.navigateTo(
                 Screen.detailsScreen(id, "bookmarks_screen")
             )
         }
-        binding.rvPhotosBookmarks.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        binding.rvPhotosBookmarks.layoutManager =
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosBookmarks.adapter = photosAdapter
 
         binding.tvExploreButton.setOnClickListener {
@@ -71,15 +71,14 @@ class BookmarksScreenFragment() : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun renderState(state: BookmarksScreenState){
+    private fun renderState(state: BookmarksScreenState) {
         photosAdapter.submitList(state.favouritePhotos)
 
-        if (state.favouritePhotos.isEmpty()){
+        if (state.favouritePhotos.isEmpty()) {
             binding.bookmarksNotEmptyLayout.visibility = View.GONE
             binding.tvBookmarksEmptyPageTitle.visibility = View.VISIBLE
             binding.bookmarksEmptyLayout.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             binding.bookmarksNotEmptyLayout.visibility = View.VISIBLE
             binding.tvBookmarksEmptyPageTitle.visibility = View.GONE
             binding.bookmarksEmptyLayout.visibility = View.GONE

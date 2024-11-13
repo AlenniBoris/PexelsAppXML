@@ -11,7 +11,7 @@ class CacheGetAllDataUseCase @Inject constructor(
     private val cacheCollectionsRepository: CacheCollectionsRepository
 ) {
 
-    suspend fun invoke() : Pair<List<Photo>, List<Collection>>{
+    suspend fun invoke(): Pair<List<Photo>, List<Collection>> {
         return Pair(
             cachePhotosRepository.getAllPhotosFromCacheDatabase(),
             cacheCollectionsRepository.getAllCollectionsFromCacheDatabase()

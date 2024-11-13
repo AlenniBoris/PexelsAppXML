@@ -3,7 +3,6 @@ package com.example.pexelsproject.presentation.liked.views
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +36,7 @@ fun PhotoCards(
     author: String?,
     onSwipeLeft: () -> Unit,
     onSwipeRight: () -> Unit
-){
+) {
 
     val offsetX = remember { Animatable(0f) }
     val swipeThreshold = 150f
@@ -72,7 +71,7 @@ fun PhotoCards(
             .offset { IntOffset(offsetX.value.toInt(), 0) }
             .clip(RoundedCornerShape(24.dp)),
         contentAlignment = Alignment.BottomCenter
-    ){
+    ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
             model = url,
@@ -86,7 +85,7 @@ fun PhotoCards(
                 .height(32.dp)
                 .background(Color.Black.copy(0.4f)),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             Text(
                 text = author.toString(),
                 color = Color.White,

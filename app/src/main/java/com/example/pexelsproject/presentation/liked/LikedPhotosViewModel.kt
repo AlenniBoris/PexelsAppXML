@@ -3,7 +3,6 @@ package com.example.pexelsproject.presentation.liked
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pexelsproject.domain.model.Photo
-import com.example.pexelsproject.data.repository.LikedRepositoryImpl
 import com.example.pexelsproject.domain.usecase.liked.LikedDeletePhotoFromLikedDatabase
 import com.example.pexelsproject.domain.usecase.liked.LikedGetAllPhotosFromDatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +26,9 @@ class LikedPhotosViewModel @Inject constructor(
         }
     }
 
-    suspend fun getLikedPhotos(){
+    private suspend fun getLikedPhotos() {
         val likedPhotosList = likedGetAllPhotosFromDatabaseUseCase.invoke()
-        screenState.update{ state ->
+        screenState.update { state ->
             state.copy(
                 photos = likedPhotosList,
                 isNoLiked = likedPhotosList.isEmpty()
@@ -37,14 +36,14 @@ class LikedPhotosViewModel @Inject constructor(
         }
     }
 
-    fun deletePhotoFromLiked(photo: Photo){
+    fun deletePhotoFromLiked(photo: Photo) {
         viewModelScope.launch {
             deletePhotoFromLikedInit(photo)
             getLikedPhotos()
         }
     }
 
-    suspend fun deletePhotoFromLikedInit(photo: Photo){
+    private suspend fun deletePhotoFromLikedInit(photo: Photo) {
         likedDeletePhotoFromLikedDatabaseUseCase.invoke(photo)
     }
 }

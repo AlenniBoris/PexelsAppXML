@@ -23,15 +23,13 @@ import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.presentation.bookmarks.BookmarksScreenViewModel
 import com.example.pexelsproject.presentation.liked.LikedPhotosViewModel
 
-@OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun LikedScreen(
     likedPhotosViewModel: LikedPhotosViewModel = hiltViewModel(),
     bookmarksScreenViewModel: BookmarksScreenViewModel = hiltViewModel(),
-){
+) {
 
     val state by likedPhotosViewModel.screenState.collectAsStateWithLifecycle()
-
 
     Scaffold(
         modifier = Modifier
@@ -50,19 +48,19 @@ fun LikedScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-        ){
+        ) {
             val context = LocalContext.current
-            val deletedFromLiked: String =  stringResource(R.string.deleted_from_liked_text)
-            val addedToBookmarks: String =  stringResource(R.string.added_to_bookmarks)
+            val deletedFromLiked: String = stringResource(R.string.deleted_from_liked_text)
+            val addedToBookmarks: String = stringResource(R.string.added_to_bookmarks)
 
 
-            if (state.photos.isNotEmpty() && !state.isNoLiked){
+            if (state.photos.isNotEmpty() && !state.isNoLiked) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(paddingValues = pd)
                         .padding(horizontal = 16.dp)
-                    ) {
-                    items(state.photos){likedPhoto ->
+                ) {
+                    items(state.photos) { likedPhoto ->
                         PhotoCards(
                             likedPhoto.src.medium,
                             likedPhoto.photographer,
@@ -87,7 +85,7 @@ fun LikedScreen(
 
                     }
                 }
-            }else if(state.isNoLiked) {
+            } else if (state.isNoLiked) {
                 EmptyScreen(
                     onExploreClicked = {
                         PexelsApplication.router.navigateTo(Screen.mainAppScreens("liked_screen"))

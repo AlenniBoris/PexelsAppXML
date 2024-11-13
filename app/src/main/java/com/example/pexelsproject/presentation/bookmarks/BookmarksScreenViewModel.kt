@@ -25,10 +25,10 @@ class BookmarksScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun getFavouritePhotosInit(){
+    private suspend fun getFavouritePhotosInit() {
         val favouriteList = bookmarksGetAllPhotosFromDatabaseUseCase.invoke()
 
-        viewModelScope.launch{
+        viewModelScope.launch {
             screenState.update { state ->
                 state.copy(
                     favouritePhotos = favouriteList,
@@ -38,13 +38,13 @@ class BookmarksScreenViewModel @Inject constructor(
         }
     }
 
-    fun addPhotoToBookmarks(photo: Photo){
+    fun addPhotoToBookmarks(photo: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
             addPhotoToBookmarksInit(photo)
         }
     }
 
-    suspend fun addPhotoToBookmarksInit(photo: Photo){
+    private suspend fun addPhotoToBookmarksInit(photo: Photo) {
         bookmarksAddPhotoToDatabaseUseCase.invoke(photo)
     }
 }

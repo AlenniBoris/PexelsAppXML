@@ -1,6 +1,5 @@
 package com.example.pexelsproject.data.source.api.model
 
-import com.example.pexelsproject.data.source.api.model.CollectionsListResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

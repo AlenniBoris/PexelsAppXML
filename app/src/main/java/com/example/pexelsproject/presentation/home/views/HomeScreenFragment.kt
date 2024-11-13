@@ -2,11 +2,10 @@ package com.example.pexelsproject.presentation.home.views
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,10 +17,10 @@ import com.example.pexelsproject.di.PexelsApplication
 import com.example.pexelsproject.navigation.Screen
 import com.example.pexelsproject.presentation.home.HomeScreenState
 import com.example.pexelsproject.presentation.home.HomeScreenViewModel
-import com.example.pexelsproject.utils.ExtraFunctions
 import com.example.pexelsproject.presentation.uikit.adapters.FeaturedCollectionsRecyclerAdapter
 import com.example.pexelsproject.presentation.uikit.adapters.PhotosRecyclerAdapter
 import com.example.pexelsproject.presentation.uikit.adapters.SearchBarHistoryRecyclerAdapter
+import com.example.pexelsproject.utils.ExtraFunctions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -32,11 +31,11 @@ class HomeScreenFragment() : Fragment() {
     private val viewModel: HomeScreenViewModel by activityViewModels()
 
     private lateinit var applicationContext: Context
-    //Photos
+
     private lateinit var photosAdapter: PhotosRecyclerAdapter
-    //Featured collections
+
     private lateinit var featuredCollectionsAdapter: FeaturedCollectionsRecyclerAdapter
-    //History
+
     private lateinit var searchHistoryAdapter: SearchBarHistoryRecyclerAdapter
 
     private var homeScreenBinding: FragmentHomeScreenBinding? = null
@@ -60,14 +59,13 @@ class HomeScreenFragment() : Fragment() {
 
         applicationContext = requireActivity().applicationContext
 
-        //Collections
         viewModel.scrollEvent
             .onEach {
                 binding.rvFeaturedCollections.scrollToPosition(0)
             }
             .launchIn(lifecycleScope)
 
-        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter{id, query ->
+        featuredCollectionsAdapter = FeaturedCollectionsRecyclerAdapter { id, query ->
             ExtraFunctions.changeSearch(
                 scope = lifecycleScope,
                 mainScreenViewModel = viewModel,
@@ -76,20 +74,20 @@ class HomeScreenFragment() : Fragment() {
             )
             binding.searchView.hide()
         }
-        binding.rvFeaturedCollections.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFeaturedCollections.layoutManager =
+            LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvFeaturedCollections.adapter = featuredCollectionsAdapter
 
-        //Photos
-        photosAdapter = PhotosRecyclerAdapter(applicationContext){ id ->
+        photosAdapter = PhotosRecyclerAdapter(applicationContext) { id ->
             PexelsApplication.router.navigateTo(
                 Screen.detailsScreen(id, "home_screen")
             )
         }
-        binding.rvPhotosMain.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        binding.rvPhotosMain.layoutManager =
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.rvPhotosMain.adapter = photosAdapter
 
-        //History
-        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter{query ->
+        searchHistoryAdapter = SearchBarHistoryRecyclerAdapter { query ->
             viewModel.queryTextChanged(query)
             viewModel.forceSearchPhoto(query)
             binding.searchView.hide()
@@ -110,7 +108,10 @@ class HomeScreenFragment() : Fragment() {
 
     private fun renderState(state: HomeScreenState) {
 
-        featuredCollectionsAdapter.submitQueryAndSelectedId(state.queryText, state.selectedFeaturedCollectionId)
+        featuredCollectionsAdapter.submitQueryAndSelectedId(
+            state.queryText,
+            state.selectedFeaturedCollectionId
+        )
         featuredCollectionsAdapter.submitList(state.featuredCollections.toMutableList())
 
         photosAdapter.submitList(state.photos)
@@ -118,19 +119,15 @@ class HomeScreenFragment() : Fragment() {
 
         binding.tvCheckInternetConnectionAgain.setOnClickListener {
             viewModel.internetRetryEventHandler(state.queryText)
-            Log.d("interet", state.queryText)
         }
 
         binding.tvGetQueryResultsAgain.setOnClickListener {
             viewModel.queryTextChanged("")
             viewModel.forceSearchPhoto("")
-            Log.d("explore", "tapped")
         }
 
-        val isActive = state.isActive
 
         binding.searchBar.setText(state.queryText)
-        Log.d("SEARCH BAR", "Text = ${state.queryText}")
 
         binding.searchView.editText.setOnEditorActionListener { v, _, _ ->
             val enteredQuery = v?.text.toString()
@@ -140,20 +137,20 @@ class HomeScreenFragment() : Fragment() {
             true
         }
 
-        binding.fab.setOnClickListener{
+        binding.fab.setOnClickListener {
             PexelsApplication.router.navigateTo(Screen.likedScreen())
         }
 
-        if (ExtraFunctions.checkHasInternetConnection(applicationContext)){
+        if (ExtraFunctions.checkHasInternetConnection(applicationContext)) {
 
-            if (state.errorState){
+            if (state.errorState) {
                 binding.nsvPhotos.visibility = View.GONE
                 binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
 
                 binding.rvFeaturedCollections.visibility = View.VISIBLE
                 binding.nsvNoResultsFoundLayout.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.nsvNoResultsFoundLayout.visibility = View.GONE
                 binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
@@ -162,17 +159,16 @@ class HomeScreenFragment() : Fragment() {
                 binding.nsvPhotos.visibility = View.VISIBLE
             }
 
-        }else{
+        } else {
 
-            if (state.photos.isNotEmpty()){
+            if (state.photos.isNotEmpty()) {
                 binding.nsvNoInternetConnectionResultLayout.visibility = View.GONE
                 binding.nsvNoResultsFoundLayout.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
 
                 binding.rvFeaturedCollections.visibility = View.VISIBLE
                 binding.nsvPhotos.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 binding.nsvNoResultsFoundLayout.visibility = View.GONE
                 binding.nsvPhotos.visibility = View.GONE
                 binding.rvFeaturedCollections.visibility = View.GONE

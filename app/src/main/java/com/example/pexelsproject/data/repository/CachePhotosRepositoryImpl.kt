@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class CachePhotosRepositoryImpl @Inject constructor(
     private val cachePhotosDatabase: CachePhotosDatabase
-): CachePhotosRepository{
+) : CachePhotosRepository {
 
     override suspend fun addPhotosToCacheDatabase(photosToAdd: List<Photo>) {
         runBlocking {

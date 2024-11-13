@@ -12,18 +12,18 @@ class CacheClearDataUseCase @Inject constructor(
     private val cachePhotosRepository: CachePhotosRepository,
     private val cacheCollectionsRepository: CacheCollectionsRepository,
     @ApplicationContext private val context: Context
-)  {
+) {
 
-    suspend fun invokeDeleteCollections(){
+    suspend fun invokeDeleteCollections() {
         cacheCollectionsRepository.deleteCollectionsFromCacheDatabase()
         Log.d("COLLECTIONS=", "DELETED collections")
     }
 
-    suspend fun invokeDeletePhotos(){
+    suspend fun invokeDeletePhotos() {
         cachePhotosRepository.deletePhotosFromCacheDatabase()
     }
 
-    fun invokeDeleteQuery(){
+    fun invokeDeleteQuery() {
         ExtraFunctions.writeLastQueryToFile("", context)
     }
 

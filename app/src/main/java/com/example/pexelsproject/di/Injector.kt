@@ -21,7 +21,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object Injector{
+object Injector {
     private const val HEADER_AUTHORIZATION = "Authorization"
     private const val BOOKMARKS_DATABASE_FILE = "bookmarks-data.db"
     private const val LIKED_DATABASE_FILE = "liked-data.db"
@@ -51,7 +51,7 @@ object Injector{
 
     @Provides
     @Singleton
-    fun providePhotoApiService(okHttpClient: OkHttpClient) : PhotoAPIService =
+    fun providePhotoApiService(okHttpClient: OkHttpClient): PhotoAPIService =
         Retrofit
             .Builder()
             .baseUrl(Constants.BASE_URL)

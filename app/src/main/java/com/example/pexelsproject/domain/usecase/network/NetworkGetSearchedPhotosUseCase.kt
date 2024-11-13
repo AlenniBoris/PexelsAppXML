@@ -9,8 +9,12 @@ class NetworkGetSearchedPhotosUseCase @Inject constructor(
     private val networkRepository: NetworkRepository
 ) {
 
-    suspend fun invoke(query: String): List<Photo>{
-        return networkRepository.getSearchedPhotosList(query, Constants.NUMBER_CURATED, Constants.PER_PAGE)
+    suspend fun invoke(query: String): List<Photo> {
+        return networkRepository.getSearchedPhotosList(
+            query,
+            Constants.NUMBER_CURATED,
+            Constants.PER_PAGE
+        )
     }
 
 }

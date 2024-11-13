@@ -8,7 +8,7 @@ class BookmarksAddPhotoToDatabaseUseCase @Inject constructor(
     private val bookmarksRepository: BookmarksRepository
 ) {
 
-    suspend fun invoke(photoToAdd: Photo){
+    suspend fun invoke(photoToAdd: Photo) {
         bookmarksRepository.addPhotoToBookmarksDatabase(photoToAdd)
     }
 

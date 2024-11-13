@@ -5,9 +5,9 @@ import javax.inject.Inject
 
 class BookmarksCountByIdUseCase @Inject constructor(
     private val bookmarksRepository: BookmarksRepository
-){
+) {
 
-    suspend fun invoke(id: Int): Int{
+    suspend fun invoke(id: Int): Int {
         return bookmarksRepository.countById(id)
     }
 

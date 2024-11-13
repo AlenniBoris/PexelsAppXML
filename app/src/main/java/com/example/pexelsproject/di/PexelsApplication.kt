@@ -6,7 +6,7 @@ import com.github.terrakok.cicerone.Router
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PexelsApplication: Application(){
+class PexelsApplication : Application() {
     companion object {
         lateinit var cicerone: Cicerone<Router>
         lateinit var router: Router

@@ -11,12 +11,12 @@ class CacheSaveDataUseCase @Inject constructor(
     private val cacheCollectionsRepository: CacheCollectionsRepository
 ) {
 
-    suspend fun invokeSavePhotos(photos: List<Photo>){
+    suspend fun invokeSavePhotos(photos: List<Photo>) {
         cachePhotosRepository.deletePhotosFromCacheDatabase()
         cachePhotosRepository.addPhotosToCacheDatabase(photos)
     }
 
-    suspend fun invokeSaveCollections(collections: List<Collection>){
+    suspend fun invokeSaveCollections(collections: List<Collection>) {
         cacheCollectionsRepository.deleteCollectionsFromCacheDatabase()
         cacheCollectionsRepository.addCollectionsToCacheDatabase(collections)
     }

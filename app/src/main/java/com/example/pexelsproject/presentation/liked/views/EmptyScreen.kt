@@ -26,19 +26,19 @@ fun EmptyScreen(
     text: String,
     btnText: String = stringResource(R.string.explore_text),
     hasInternet: Boolean = true
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (!hasInternet){
+        if (!hasInternet) {
             Image(
                 painter = painterResource(id = R.drawable.ic_no_network),
                 contentDescription = stringResource(R.string.no_network_description)
             )
-        }else{
+        } else {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = text,

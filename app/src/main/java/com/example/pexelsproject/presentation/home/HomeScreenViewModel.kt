@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pexelsproject.domain.usecase.cache.CacheClearDataUseCase
-import com.example.pexelsproject.domain.usecase.cache.CacheSaveDataUseCase
 import com.example.pexelsproject.domain.usecase.cache.CacheGetAllDataUseCase
+import com.example.pexelsproject.domain.usecase.cache.CacheSaveDataUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetCuratedPhotosUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetFeaturedCollectionUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetSearchedPhotosUseCase
@@ -14,7 +14,6 @@ import com.example.pexelsproject.utils.ExtraFunctions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +23,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val networkGetSearchedPhotosUseCase: NetworkGetSearchedPhotosUseCase,
@@ -34,7 +32,7 @@ class HomeScreenViewModel @Inject constructor(
     private val cacheSaveDataUseCase: CacheSaveDataUseCase,
     private val cacheClearDataUseCase: CacheClearDataUseCase,
     @ApplicationContext private val context: Context
-) : ViewModel(){
+) : ViewModel() {
 
     val screenState = MutableStateFlow(HomeScreenState())
 
@@ -47,12 +45,12 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initialAction(){
+    private suspend fun initialAction() {
 
-        if (ExtraFunctions.checkHasInternetConnection(context)){
+        if (ExtraFunctions.checkHasInternetConnection(context)) {
             getCuratedPhotos()
             getFeaturedCollection()
-        }else{
+        } else {
             val cachedQuery = ExtraFunctions.readLastQueryFromFile(context)
             queryTextChanged(cachedQuery)
 
@@ -68,7 +66,7 @@ class HomeScreenViewModel @Inject constructor(
 
     }
 
-    fun internetRetryEventHandler(query: String){
+    fun internetRetryEventHandler(query: String) {
         viewModelScope.launch {
             getFeaturedCollection()
             searchPhotoInternal(query)
@@ -94,20 +92,20 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private suspend fun searchPhotoInternal(query: String) {
-        screenState.update {state ->
+        screenState.update { state ->
             state.copy(
                 isActive = false,
                 history = if (query != "") state.history + query else state.history
             )
         }
-        if (query.isNotEmpty()){
+        if (query.isNotEmpty()) {
             getQueryPhotos(query)
         } else {
             getCuratedPhotos()
         }
     }
 
-    suspend fun getFeaturedCollection(){
+    private suspend fun getFeaturedCollection() {
         val featuredList = networkGetFeaturedCollectionUseCase.invoke()
         screenState.update { state ->
             state.copy(
@@ -115,13 +113,12 @@ class HomeScreenViewModel @Inject constructor(
                 initialFeaturedCollections = featuredList
             )
         }
-        if (featuredList.isNotEmpty()){
+        if (featuredList.isNotEmpty()) {
             cacheSaveDataUseCase.invokeSaveCollections(featuredList)
-            Log.d("COLLECTIONS=", "SAVED collections")
         }
     }
 
-    suspend fun getCuratedPhotos(){
+    private suspend fun getCuratedPhotos() {
         val curatedList = networkGetCuratedPhotosUseCase.invoke()
         screenState.update { state ->
             state.copy(
@@ -129,7 +126,7 @@ class HomeScreenViewModel @Inject constructor(
                 photos = curatedList
             )
         }
-        if (curatedList.isNotEmpty()){
+        if (curatedList.isNotEmpty()) {
             screenState.update { state ->
                 state.copy(
                     cachedQuery = ""
@@ -140,7 +137,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun getQueryPhotos(query: String){
+    suspend fun getQueryPhotos(query: String) {
         val queryPhotos = networkGetSearchedPhotosUseCase.invoke(query)
         screenState.update { state ->
             state.copy(
@@ -148,7 +145,7 @@ class HomeScreenViewModel @Inject constructor(
                 photos = queryPhotos
             )
         }
-        if (queryPhotos.isNotEmpty()){
+        if (queryPhotos.isNotEmpty()) {
             screenState.update { state ->
                 state.copy(
                     cachedQuery = query
@@ -159,7 +156,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun queryTextChanged(newQuery: String){
+    fun queryTextChanged(newQuery: String) {
         screenState.update { state ->
             state.copy(
                 queryText = newQuery,
@@ -170,7 +167,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
 
-    fun selectedFeaturedCollectionIdChanged(id: String){
+    fun selectedFeaturedCollectionIdChanged(id: String) {
         screenState.update { state ->
             val currentCollections = state.initialFeaturedCollections.toMutableList()
             val foundIndex = currentCollections.indexOfFirst { item -> item.id == id }
@@ -191,9 +188,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun clearCache(){
+    fun clearCache() {
         viewModelScope.launch {
-//            cacheClearDataUseCase.invokeDeleteCollections()
             cacheClearDataUseCase.invokeDeletePhotos()
             cacheClearDataUseCase.invokeDeleteQuery()
         }

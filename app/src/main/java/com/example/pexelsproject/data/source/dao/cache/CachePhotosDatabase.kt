@@ -10,6 +10,6 @@ import com.example.pexelsproject.data.source.dao.model.PhotoEntity
     version = 1,
     exportSchema = false
 )
-abstract class CachePhotosDatabase: RoomDatabase() {
+abstract class CachePhotosDatabase : RoomDatabase() {
     abstract val dao: PhotoDatabaseDao
 }

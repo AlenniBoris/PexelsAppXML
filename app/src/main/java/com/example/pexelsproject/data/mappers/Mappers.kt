@@ -1,13 +1,13 @@
 package com.example.pexelsproject.data.mappers
 
-import com.example.pexelsproject.domain.model.Collection
-import com.example.pexelsproject.domain.model.Photo
-import com.example.pexelsproject.domain.model.PhotoFeatures
 import com.example.pexelsproject.data.source.api.model.CollectionsListResponse
 import com.example.pexelsproject.data.source.api.model.PhotoResponse
 import com.example.pexelsproject.data.source.dao.model.CollectionEntity
 import com.example.pexelsproject.data.source.dao.model.PhotoEntity
 import com.example.pexelsproject.data.source.dao.model.PhotoSrcListEntity
+import com.example.pexelsproject.domain.model.Collection
+import com.example.pexelsproject.domain.model.Photo
+import com.example.pexelsproject.domain.model.PhotoFeatures
 
 fun CollectionsListResponse.asCollections(): Collection {
     return Collection(
@@ -21,7 +21,7 @@ fun CollectionsListResponse.asCollections(): Collection {
     )
 }
 
-fun PhotoResponse.asPhoto() : Photo {
+fun PhotoResponse.asPhoto(): Photo {
     return Photo(
         id = this.id,
         width = this.width,
@@ -46,7 +46,7 @@ fun PhotoResponse.asPhoto() : Photo {
     )
 }
 
-fun Photo.asPhotoEntity() : PhotoEntity {
+fun Photo.asPhotoEntity(): PhotoEntity {
     return PhotoEntity(
         id = this.id,
         width = this.width,
@@ -96,7 +96,7 @@ fun PhotoEntity.asPhoto(): Photo {
     )
 }
 
-fun Collection.asCollectionEntity(): CollectionEntity{
+fun Collection.asCollectionEntity(): CollectionEntity {
     return CollectionEntity(
         id = this.id,
         title = this.title,
@@ -108,7 +108,7 @@ fun Collection.asCollectionEntity(): CollectionEntity{
     )
 }
 
-fun CollectionEntity.asCollection(): Collection{
+fun CollectionEntity.asCollection(): Collection {
     return Collection(
         id = this.id,
         title = this.title,

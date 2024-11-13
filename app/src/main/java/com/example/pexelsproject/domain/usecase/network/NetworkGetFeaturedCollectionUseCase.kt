@@ -9,8 +9,11 @@ class NetworkGetFeaturedCollectionUseCase @Inject constructor(
     private val networkRepository: NetworkRepository
 ) {
 
-    suspend fun invoke(): List<Collection>{
-        return networkRepository.getFeaturedCollectionsList(Constants.PER_PAGE, Constants.NUMBER_FEATURED)
+    suspend fun invoke(): List<Collection> {
+        return networkRepository.getFeaturedCollectionsList(
+            Constants.PER_PAGE,
+            Constants.NUMBER_FEATURED
+        )
     }
 
 }

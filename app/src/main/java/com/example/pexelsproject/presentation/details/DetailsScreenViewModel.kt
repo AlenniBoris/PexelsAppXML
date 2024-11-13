@@ -15,10 +15,10 @@ import com.bumptech.glide.Glide
 import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksAddPhotoToDatabaseUseCase
 import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksCountByIdUseCase
-import com.example.pexelsproject.domain.usecase.liked.LikedCountByIdUseCase
 import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksDeletePhotoFromDatabaseUseCase
 import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksGetPhotoFromDatabaseByIdUseCase
 import com.example.pexelsproject.domain.usecase.liked.LikedAddPhotoToDatabaseUseCase
+import com.example.pexelsproject.domain.usecase.liked.LikedCountByIdUseCase
 import com.example.pexelsproject.domain.usecase.liked.LikedDeletePhotoFromLikedDatabase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetPhotoByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,13 +46,13 @@ class DetailsScreenViewModel @Inject constructor(
 
     val screenState = MutableStateFlow(DetailsScreenState())
 
-    fun downloadImagesToGallery(context: Context){
+    fun downloadImagesToGallery(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             downloadImagesInit(context)
         }
     }
 
-    private suspend fun downloadImagesInit(context: Context){
+    private suspend fun downloadImagesInit(context: Context) {
         try {
             val bitmap = withContext(Dispatchers.IO) {
                 Glide.with(context)
@@ -66,21 +66,22 @@ class DetailsScreenViewModel @Inject constructor(
                 saveBitmapToGallery(context, bitmap)
             }
 
-            withContext(Dispatchers.Main){
-                if (savedUri != null){
+            withContext(Dispatchers.Main) {
+                if (savedUri != null) {
                     Toast.makeText(context, "Image saved to gallery", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context, "Image was not saved to gallery", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Image was not saved to gallery", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-        } catch (e: Exception){
-            withContext(Dispatchers.Main){
-                Toast.makeText(context, e.message.toString() , Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, e.message.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun saveBitmapToGallery(context: Context, bitmap: Bitmap): Uri?{
+    private fun saveBitmapToGallery(context: Context, bitmap: Bitmap): Uri? {
         val filename = "${System.currentTimeMillis()}.jpg"
         var fos: OutputStream? = null
         var imageUri: Uri? = null
@@ -99,7 +100,9 @@ class DetailsScreenViewModel @Inject constructor(
                 resolver.openOutputStream(it)
             }
         } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                    .toString()
             val image = File(imagesDir, filename)
             fos = FileOutputStream(image)
             imageUri = Uri.fromFile(image)
@@ -113,19 +116,19 @@ class DetailsScreenViewModel @Inject constructor(
         return imageUri
     }
 
-    fun loadImageAction(prevDestination: String, pictureId: Int){
-        if (prevDestination == "home_screen"){
+    fun loadImageAction(prevDestination: String, pictureId: Int) {
+        if (prevDestination == "home_screen") {
             getPhotoFromPexelsById(pictureId)
         } else {
             getPhotoFromBookmarksDatabaseById(pictureId)
         }
     }
 
-    private fun changeIsFavourite(isFavourite: Boolean){
+    private fun changeIsFavourite(isFavourite: Boolean) {
         screenState.update { state -> state.copy(photoIsFavourite = isFavourite) }
     }
 
-    private fun assignPhoto(photo: Photo?){
+    private fun assignPhoto(photo: Photo?) {
         screenState.update { state ->
             val someErrorOccurred = photo == null
 
@@ -136,8 +139,8 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun getPhotoFromPexelsById(id: Int?){
-        if (id != null){
+    private fun getPhotoFromPexelsById(id: Int?) {
+        if (id != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 val photo = networkGetPhotoByIdUseCase.invoke(id)
                 Log.d("PexelsById", photo.toString())
@@ -147,8 +150,8 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun getPhotoFromBookmarksDatabaseById(id: Int?){
-        if (id != null){
+    private fun getPhotoFromBookmarksDatabaseById(id: Int?) {
+        if (id != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 val favourite = bookmarksGetPhotoByIdUseCase.invoke(id)
                 Log.d("DatabaseById", favourite.toString())
@@ -158,9 +161,9 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun actionOnAddToLikedButton(photo: Photo){
+    fun actionOnAddToLikedButton(photo: Photo) {
         viewModelScope.launch {
-            if (screenState.value.photoIsLiked){
+            if (screenState.value.photoIsLiked) {
                 removeFromLiked(photo)
                 changeIsLiked(false)
             } else {
@@ -170,22 +173,22 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun addToLiked(photoToAdd: Photo){
+    private suspend fun addToLiked(photoToAdd: Photo) {
         likedAddPhotoToDatabaseUseCase.invoke(photoToAdd)
     }
 
-    suspend fun removeFromLiked(photoToDelete: Photo){
+    private suspend fun removeFromLiked(photoToDelete: Photo) {
         likedDeletePhotoToDatabaseUseCase.invoke(photoToDelete)
     }
 
-    private fun changeIsLiked(isFavourite: Boolean){
+    private fun changeIsLiked(isFavourite: Boolean) {
         screenState.update { state -> state.copy(photoIsLiked = isFavourite) }
     }
 
 
-    fun actionOnAddToBookmarksButton(photo: Photo){
+    fun actionOnAddToBookmarksButton(photo: Photo) {
         viewModelScope.launch {
-            if (screenState.value.photoIsFavourite){
+            if (screenState.value.photoIsFavourite) {
                 removeFromBookmarks(photo)
                 changeIsFavourite(false)
             } else {
@@ -195,22 +198,22 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun addToBookmarks(photo: Photo) {
+    private suspend fun addToBookmarks(photo: Photo) {
         viewModelScope.launch {
             bookmarksAddPhotoFromDatabaseByIdUseCase.invoke(photo)
         }
 
     }
 
-    suspend fun removeFromBookmarks(photo: Photo) {
-        viewModelScope.launch{
+    private suspend fun removeFromBookmarks(photo: Photo) {
+        viewModelScope.launch {
             bookmarksDeletePhotoFromDatabaseUseCase.invoke(photo)
         }
     }
 
 
-    suspend fun countPhotosById(id: Int) {
-        viewModelScope.launch{
+    private suspend fun countPhotosById(id: Int) {
+        viewModelScope.launch {
             val bookmarksCount = bookmarksCountByIdUseCase.invoke(id)
             changeIsFavourite(bookmarksCount != 0)
 

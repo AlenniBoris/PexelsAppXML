@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.onEach
 class DetailsScreenFragment : Fragment() {
 
     private lateinit var applicationContext: Context
-    //Photo
 
     private val viewModel: DetailsScreenViewModel by viewModels()
 

@@ -11,4 +11,4 @@ data class PhotoSrcListResponse(
     val portrait: String,
     val landscape: String,
     val tiny: String
-): Serializable
+) : Serializable
