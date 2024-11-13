@@ -71,36 +71,35 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //retrofit
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
     //Dagger-Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
 
     //Fragments
     // Kotlin
-    implementation("androidx.fragment:fragment-ktx:1.8.2")
+    implementation(libs.androidx.fragment.ktx)
 
     //Cicerone
-    implementation("com.github.terrakok:cicerone:7.1")
+    implementation(libs.cicerone)
 
     //Actvity viewModels
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     //Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
     kapt("androidx.room:room-compiler:2.6.1")
 
 
@@ -110,42 +109,42 @@ dependencies {
 
     // Choose one of the following:
     // Material Design 3
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.material3)
     // or Material Design 2
-    implementation("androidx.compose.material:material")
+    implementation(libs.androidx.material)
     // or skip Material Design and build directly on top of foundational components
-    implementation("androidx.compose.foundation:foundation")
+    implementation(libs.androidx.foundation)
     // or only import the main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
-    implementation("androidx.compose.ui:ui")
+    implementation(libs.androidx.ui)
 
     // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     // Optional - Included automatically by material, only add when you need
     // the icons but not the material library (e.g. when using Material3 or a
     // custom design system based on Foundation)
-    implementation("androidx.compose.material:material-icons-core")
+    implementation(libs.androidx.material.icons.core)
     // Optional - Add full set of material icons
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
     // Optional - Add window size utils
-    implementation("androidx.compose.material3.adaptive:adaptive")
+    implementation(libs.androidx.adaptive)
 
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.9.2")
+    implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation(libs.androidx.runtime.livedata)
     // Optional - Integration with RxJava
-    implementation("androidx.compose.runtime:runtime-rxjava2")
+    implementation(libs.androidx.runtime.rxjava2)
 
     //coil
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
 }
