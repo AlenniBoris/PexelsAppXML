@@ -4,7 +4,7 @@ import com.example.pexelsproject.domain.model.Photo
 import com.example.pexelsproject.domain.repository.LikedRepository
 import javax.inject.Inject
 
-class LikedDeletePhotoFromLikedDatabase @Inject constructor(
+class LikedDeletePhotoFromLikedDatabaseUseCase @Inject constructor(
     private val likedRepository: LikedRepository
 ) {
 

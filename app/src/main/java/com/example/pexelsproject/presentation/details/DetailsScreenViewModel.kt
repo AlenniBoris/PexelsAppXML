@@ -19,7 +19,7 @@ import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksDeletePhotoFr
 import com.example.pexelsproject.domain.usecase.bookmarks.BookmarksGetPhotoFromDatabaseByIdUseCase
 import com.example.pexelsproject.domain.usecase.liked.LikedAddPhotoToDatabaseUseCase
 import com.example.pexelsproject.domain.usecase.liked.LikedCountByIdUseCase
-import com.example.pexelsproject.domain.usecase.liked.LikedDeletePhotoFromLikedDatabase
+import com.example.pexelsproject.domain.usecase.liked.LikedDeletePhotoFromLikedDatabaseUseCase
 import com.example.pexelsproject.domain.usecase.network.NetworkGetPhotoByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +41,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val bookmarksCountByIdUseCase: BookmarksCountByIdUseCase,
     private val likedCountByIdUseCase: LikedCountByIdUseCase,
     private val likedAddPhotoToDatabaseUseCase: LikedAddPhotoToDatabaseUseCase,
-    private val likedDeletePhotoToDatabaseUseCase: LikedDeletePhotoFromLikedDatabase,
+    private val likedDeletePhotoToDatabaseUseCase: LikedDeletePhotoFromLikedDatabaseUseCase,
 ) : ViewModel() {
 
     val screenState = MutableStateFlow(DetailsScreenState())

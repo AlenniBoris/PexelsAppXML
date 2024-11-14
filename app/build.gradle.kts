@@ -57,6 +57,9 @@ android {
         viewBinding = true
         compose = true
     }
+    testOptions{
+        unitTests.isIncludeAndroidResources =  true
+    }
 }
 
 dependencies {
@@ -66,9 +69,15 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     //retrofit
     implementation(libs.converter.gson)
@@ -147,4 +156,9 @@ dependencies {
     //coil
     implementation(libs.coil)
     implementation(libs.coil.compose)
+
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.mockk.v193)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

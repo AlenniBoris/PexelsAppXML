@@ -16,7 +16,6 @@ class CacheClearDataUseCase @Inject constructor(
 
     suspend fun invokeDeleteCollections() {
         cacheCollectionsRepository.deleteCollectionsFromCacheDatabase()
-        Log.d("COLLECTIONS=", "DELETED collections")
     }
 
     suspend fun invokeDeletePhotos() {

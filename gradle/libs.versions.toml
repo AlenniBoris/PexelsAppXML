@@ -18,16 +18,23 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+kotlinTestJunit = "2.0.0"
+kotlinxCoroutinesTest = "1.9.0"
 lifecycleViewmodelCompose = "2.8.7"
 lifecycleViewmodelKtx = "2.8.6"
 loggingInterceptor = "4.12.0"
 material = "1.12.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+mockitoCore = "5.8.0"
+mockk = "1.13.0"
+mockkVersion = "1.9.3"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
 uikitTooling = "1.0.0"
+junitJupiter = "5.8.1"
+coreKtxVersion = "1.6.1"
 
 [libraries]
 accompanist-swipetodismiss = { module = "com.google.accompanist:accompanist-swipetodismiss", version.ref = "accompanistSwipetodismiss" }
@@ -67,13 +74,20 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTestJunit" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-v193 = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 uikit-tooling = { module = "androidx.compose.uikit:uikit-tooling", version.ref = "uikitTooling" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
