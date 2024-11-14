@@ -26,6 +26,8 @@ on each image, view its details.
 - Kotlin Coroutines
 - MVVM
 - Clean Architecture
+- Mockk
+- JUnit tests
 
 
 ## Installation and Use(after downloading from GitHub)
